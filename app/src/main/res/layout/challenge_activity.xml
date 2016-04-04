@@ -5,20 +5,26 @@
                 android:layout_height="match_parent"
                 android:background="@android:color/white">
 
-    <EditText
-        style="@style/ChallengeEditText"
-        android:id="@+id/first_challenger"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:translationY="-80dp"
-        android:hint="First Player"/>
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <EditText
+            style="@style/ChallengeEditText"
+            android:id="@+id/first_challenger"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:translationY="@dimen/p1_translation"
+            android:hint="@string/first_player"/>
+
+    </android.support.design.widget.TextInputLayout>
 
     <TextView
         style="@style/VsTextView"
         android:id="@+id/v"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:translationX="-8dp"
+        android:translationX="@dimen/nagative_vs_translation"
         android:text="V"/>
 
     <TextView
@@ -26,15 +32,21 @@
         android:id="@+id/s"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:translationX="8dp"
+        android:translationX="@dimen/vs_translation"
         android:text="S"/>
 
-    <EditText
-        style="@style/ChallengeEditText"
-        android:id="@+id/second_challenger"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:translationY="80dp"
-        android:hint="Second Player"/>
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <EditText
+            style="@style/ChallengeEditText"
+            android:id="@+id/second_challenger"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:translationY="@dimen/p2_translation"
+            android:hint="@string/second_player"/>
+
+    </android.support.design.widget.TextInputLayout>
 
 </RelativeLayout>

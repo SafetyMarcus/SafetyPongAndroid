@@ -2,4 +2,6 @@
     <string name="app_name">SafetyPongAndroid</string>
     <string name="action_settings">Settings</string>
     <string name="ladder">Ladder</string>
+    <string name="first_player">First Player</string>
+    <string name="second_player">Second Player</string>
 </resources>

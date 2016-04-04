@@ -2,12 +2,9 @@ package hoopray.safetypongandroid;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.transition.Explode;
-import android.view.View;
-import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -26,7 +23,8 @@ public class MainActivity extends AppCompatActivity
 		setSupportActionBar(toolbar);
 	}
 
-	@OnClick(R.id.fab) void onClick()
+	@OnClick(R.id.fab)
+	void onClick()
 	{
 		startActivity(new Intent(MainActivity.this, ChallengeActivity.class));
 	}

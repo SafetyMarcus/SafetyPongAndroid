@@ -17,9 +17,12 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
-    <style name="ChallengeEditText" parent="Widget.AppCompat.EditText">
-        <item name="android:textSize">16sp</item>
+    <style name="ChallengeEditText">
+        <item name="android:textSize">24sp</item>
         <item name="android:textColor">@color/textColor</item>
+    </style>
+
+    <style name="ChallengeInputLayout">
         <item name="android:layout_centerInParent">true</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_margin">16dp</item>
@@ -27,7 +30,7 @@
     </style>
 
     <style name="VsTextView">
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">32sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_centerInParent">true</item>
         <item name="android:textColor">@color/colorPrimary</item>
