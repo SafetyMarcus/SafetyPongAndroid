@@ -3,24 +3,27 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:gravity="center"
-              android:padding="16dp"
-              android:orientation="vertical">
+              android:orientation="vertical"
+              android:padding="16dp">
 
     <EditText
-        android:id="@+id/league_id"
+        android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/league_id"/>
+        android:hint="@string/name"/>
 
     <EditText
-        android:id="@+id/league_password"
+        android:id="@+id/start_rating"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/password"/>
+        android:hint="@string/initial_rating"
+        android:inputType="numberSigned"
+        android:text="1000"/>
 
     <Button
-        android:id="@+id/login"
+        android:id="@+id/save"
         android:layout_width="100dp"
         android:layout_height="36dp"
-        android:text="@string/login"/>
+        android:text="@string/save"/>
+
 </LinearLayout>

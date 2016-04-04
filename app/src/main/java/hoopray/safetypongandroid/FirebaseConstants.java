@@ -8,4 +8,6 @@ public class FirebaseConstants
     public static final String LEAGUES = "leagues";
     public static final String NAME = "name";
     public static final String PASSWORD = "password";
+
+    public static final String PLAYERS = "players";
 }

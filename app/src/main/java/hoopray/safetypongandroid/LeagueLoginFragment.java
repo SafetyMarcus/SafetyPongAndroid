@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
@@ -34,10 +33,6 @@ public class LeagueLoginFragment extends Fragment
     EditText password;
     @Bind(R.id.login)
     Button login;
-
-    //Temp state to show logged in
-    @Bind(R.id.logged_in)
-    ImageView loggedIn;
 
     @Nullable
     @Override
@@ -83,8 +78,7 @@ public class LeagueLoginFragment extends Fragment
                         SafetyPong app = SafetyPong.getInstance();
                         app.currentLeague = snapshot.getValue(League.class);
                         app.currentLeagueKey = snapshot.getKey();
-                        loggedIn.setVisibility(View.VISIBLE);
-                        Log.d("pong", "great successs " + app.currentLeagueKey + " " + app.currentLeague.getName());
+                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, new NewPlayerFragment()).commit();
                     }
                 }
 

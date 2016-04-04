@@ -1,15 +1,12 @@
 package hoopray.safetypongandroid;
 
-import java.util.ArrayList;
-
 /**
  * @author Dominic Murray 4/04/2016.
  */
 public class League
 {
-    public String name;
-    public String password;
-    public ArrayList<Player> players;
+    private String name;
+    private String password;
 
     public League()
     {
@@ -33,15 +30,5 @@ public class League
     public void setPassword(String password)
     {
         this.password = password;
-    }
-
-    public ArrayList<Player> getPlayers()
-    {
-        return players;
-    }
-
-    public void setPlayers(ArrayList<Player> players)
-    {
-        this.players = players;
     }
 }

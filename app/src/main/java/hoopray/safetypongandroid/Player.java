@@ -5,22 +5,11 @@ package hoopray.safetypongandroid;
  */
 public class Player
 {
-    public String id;
-    public String name;
-    public int rating;
+    private String name;
+    private int rating;
 
     public Player()
     {
-    }
-
-    public String getId()
-    {
-        return id;
-    }
-
-    public void setId(String id)
-    {
-        this.id = id;
     }
 
     public String getName()

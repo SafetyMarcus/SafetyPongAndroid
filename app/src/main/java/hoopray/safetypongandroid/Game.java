@@ -5,13 +5,13 @@ package hoopray.safetypongandroid;
  */
 public class Game
 {
-    public String playerOneId;
-    public String playerTwoId;
-    public int playerOneScore;
-    public int playerTwoScore;
-    public int playerOneRatingBefore;
-    public int playerTwoRatingBefore;
-    public long dateInMilliseconds;
+    private String playerOneId;
+    private String playerTwoId;
+    private int playerOneScore;
+    private int playerTwoScore;
+    private int playerOneRatingBefore;
+    private int playerTwoRatingBefore;
+    private long dateInMilliseconds;
 
     public Game()
     {
