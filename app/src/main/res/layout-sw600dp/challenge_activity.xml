@@ -13,19 +13,31 @@
         android:elevation="4dp"
         android:layout_centerInParent="true">
 
-        <android.support.design.widget.TextInputLayout
-            style="@style/ChallengeInputLayout"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:translationY="@dimen/p1_translation">
 
-            <EditText
-                style="@style/ChallengeEditText"
-                android:id="@+id/first_challenger"
-                android:layout_width="@dimen/player_text_width"
-                android:layout_height="wrap_content"
-                android:hint="@string/first_player"/>
-        </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/p1_input"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    style="@style/ChallengeEditText"
+                    android:id="@+id/first_challenger"
+                    android:layout_width="@dimen/player_text_width"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/first_player"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <ImageButton
+                style="@style/NextButton"
+                android:id="@+id/p1_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
 
         <TextView
             style="@style/VsTextView"
@@ -33,6 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:translationX="@dimen/nagative_vs_translation"
+            android:alpha="0"
             android:text="V"/>
 
         <TextView
@@ -41,21 +54,35 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:translationX="@dimen/vs_translation"
+            android:alpha="0"
             android:text="S"/>
 
-        <android.support.design.widget.TextInputLayout
-            style="@style/ChallengeInputLayout"
+        <LinearLayout
+            android:id="@+id/p2_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
             android:translationY="@dimen/p2_translation">
 
-            <EditText
-                style="@style/ChallengeEditText"
-                android:id="@+id/second_challenger"
-                android:layout_width="@dimen/player_text_width"
-                android:layout_height="wrap_content"
-                android:hint="@string/second_player"/>
-        </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/p2_input"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    style="@style/ChallengeEditText"
+                    android:id="@+id/second_challenger"
+                    android:layout_width="@dimen/player_text_width"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/second_player"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <ImageButton
+                style="@style/NextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
     </RelativeLayout>
 
 </RelativeLayout>

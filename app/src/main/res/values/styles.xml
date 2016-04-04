@@ -22,11 +22,14 @@
         <item name="android:textColor">@color/textColor</item>
     </style>
 
-    <style name="ChallengeInputLayout">
-        <item name="android:layout_centerInParent">true</item>
-        <item name="android:gravity">center</item>
-        <item name="android:layout_margin">16dp</item>
-        <item name="android:padding">8dp</item>
+    <style name="NextButton">
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_marginTop">32dp</item>
+        <item name="android:layout_marginLeft">24dp</item>
+        <item name="android:src">@drawable/right_arrow</item>
+        <item name="android:tint">@color/colorAccent</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
     </style>
 
     <style name="VsTextView">
