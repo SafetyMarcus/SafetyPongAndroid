@@ -40,7 +40,7 @@ public class NewPlayerFragment extends Fragment
             public void onClick(View view)
             {
                 SafetyPong app = SafetyPong.getInstance();
-                Firebase safetyPong = app.firebase.child(FirebaseConstants.LEAGUES).child(app.currentLeagueKey).child(FirebaseConstants.PLAYERS).child(UUID.randomUUID().toString());
+                Firebase safetyPong = app.firebase.child(FirebaseConstants.PLAYERS).child(app.currentLeagueKey).child(UUID.randomUUID().toString());
                 Player player = new Player();
                 player.setName(name.getText().toString());
                 player.setRating(Integer.valueOf(rating.getText().toString()));
