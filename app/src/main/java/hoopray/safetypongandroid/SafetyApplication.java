@@ -8,12 +8,11 @@ import android.os.Build;
  */
 public class SafetyApplication extends Application
 {
-	public static boolean is21Plus;
+	public static boolean is21Plus = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
 
 	@Override
 	public void onCreate()
 	{
 		super.onCreate();
-		is21Plus = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
 	}
 }

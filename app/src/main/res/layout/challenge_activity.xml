@@ -3,16 +3,19 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:focusableInTouchMode="true"
                 android:background="@android:color/white">
 
     <android.support.design.widget.TextInputLayout
+        style="@style/ChallengeInputLayout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:translationY="@dimen/p1_translation">
 
         <EditText
             style="@style/ChallengeEditText"
             android:id="@+id/first_challenger"
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/player_text_width"
             android:layout_height="wrap_content"
             android:translationY="@dimen/p1_translation"
             android:hint="@string/first_player"/>
@@ -36,13 +39,15 @@
         android:text="S"/>
 
     <android.support.design.widget.TextInputLayout
+        style="@style/ChallengeInputLayout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:translationY="@dimen/p2_translation">
 
         <EditText
             style="@style/ChallengeEditText"
             android:id="@+id/second_challenger"
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/player_text_width"
             android:layout_height="wrap_content"
             android:translationY="@dimen/p2_translation"
             android:hint="@string/second_player"/>
