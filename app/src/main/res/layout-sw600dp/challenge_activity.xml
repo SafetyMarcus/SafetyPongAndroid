@@ -62,13 +62,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:visibility="gone"
             android:translationY="@dimen/p2_translation">
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/p2_input"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:alpha="0">
 
                 <EditText
                     style="@style/ChallengeEditText"
@@ -80,8 +80,10 @@
 
             <ImageButton
                 style="@style/NextButton"
+                android:id="@+id/p2_next"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:alpha="0"/>
         </LinearLayout>
     </RelativeLayout>
 
