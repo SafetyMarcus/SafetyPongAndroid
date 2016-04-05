@@ -1,12 +1,19 @@
 package hoopray.safetypongandroid;
 
+import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.transition.Explode;
 import android.view.View;
+import android.view.Window;
 import android.view.animation.Interpolator;
 import android.widget.TextView;
 import butterknife.Bind;
@@ -15,6 +22,9 @@ import butterknife.OnClick;
 import com.easygoingapps.ThePolice;
 import com.easygoingapps.annotations.Observe;
 import com.easygoingapps.utils.State;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Marcus Hooper
@@ -67,7 +77,7 @@ public class ChallengeActivity extends AppCompatActivity
 		ThePolice.watch(this);
 
 		if(SafetyApplication.is21Plus)
-			getWindow().setEnterTransition(new Explode());
+			getWindow().setStatusBarColor(getColor(R.color.colorPrimaryDark));
 
 		p2Next.setClickable(false);
 		secondEditText.setEnabled(false);
@@ -76,7 +86,8 @@ public class ChallengeActivity extends AppCompatActivity
 	@OnClick(R.id.p1_next)
 	void onFirstNextClick()
 	{
-		firstChallengerFinalView.setText(firstChallenger.getValue());
+		String name = firstChallenger.getValue();
+		firstChallengerFinalView.setText(TextUtils.isEmpty(name) ? getString(R.string.no_name) : name);
 
 		vsSet = new AnimatorSet();
 		ObjectAnimator vAnimator = ObjectAnimator.ofFloat(v, "translationX",
@@ -119,20 +130,56 @@ public class ChallengeActivity extends AppCompatActivity
 	@OnClick(R.id.p2_next)
 	void onFinishClick()
 	{
-		secondChallengerFinalView.setText(secondChallenger.getValue());
+		String name = secondChallenger.getValue();
+		secondChallengerFinalView.setText(TextUtils.isEmpty(name) ? getString(R.string.no_name) : name);
 
 		finalSet = new AnimatorSet();
 		ObjectAnimator hideFirstAlpha = ObjectAnimator.ofFloat(secondChallengerLayout, "alpha", 1, 0);
 		ObjectAnimator showFirstFinalAlpha = ObjectAnimator.ofFloat(secondChallengerFinalView, "alpha", 0, 1);
 		ObjectAnimator hideFirstNext = ObjectAnimator.ofFloat(p2Next, "alpha", 1, 0);
 		finalSet.setStartDelay(100);
-		finalSet.playTogether(hideFirstAlpha, showFirstFinalAlpha, hideFirstNext);
-		finalSet.start();
 
 		p2Next.setClickable(false);
 		secondEditText.setEnabled(false);
 		hasAnimatedSecond = true;
+
+		ObjectAnimator vAlpha = ObjectAnimator.ofFloat(v, "alpha", 1, 0);
+		vAlpha.setStartDelay(400);
+		ObjectAnimator sAlpha = ObjectAnimator.ofFloat(s, "alpha", 1, 0);
+		sAlpha.setStartDelay(400);
+
+		finalSet.playTogether(hideFirstAlpha, showFirstFinalAlpha, hideFirstNext, vAlpha, sAlpha);
+		finalSet.start();
+
+		finalSet.addListener(listener);
 	}
+
+	private SafetyAnimationListener listener = new SafetyAnimationListener()
+	{
+		@Override
+		public void onAnimationEnd(Animator animation)
+		{
+			Intent intent = new Intent(ChallengeActivity.this, GameResultsActivity.class);
+
+			List<Pair<View, String>> sharedElements = new ArrayList<>();
+			if(getResources().getBoolean(R.bool.isLarge))
+			{
+				finalSet.removeListener(this);
+				View cardLayout = findViewById(R.id.card_layout);
+				String transitionName = getString(R.string.floating_card);
+				sharedElements.add(Pair.create(cardLayout, transitionName));
+
+				View background = findViewById(R.id.background);
+				String backgroundName = getString(R.string.background);
+				sharedElements.add(Pair.create(background, backgroundName));
+			}
+
+			Pair<View, String>[] views = sharedElements.toArray(new Pair[sharedElements.size()]);
+			ActivityCompat.startActivity(ChallengeActivity.this, intent,
+					ActivityOptionsCompat.makeSceneTransitionAnimation(ChallengeActivity.this,
+							views).toBundle());
+		}
+	};
 
 	@Override
 	public void onBackPressed()

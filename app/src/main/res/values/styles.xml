@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowActionBar">false</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -46,4 +47,6 @@
         <item name="android:layout_centerInParent">true</item>
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
+
+    <style name="NoBar" parent="Theme.AppCompat.Light.NoActionBar"/>
 </resources>

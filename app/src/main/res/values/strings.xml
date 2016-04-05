@@ -4,4 +4,5 @@
     <string name="ladder">Ladder</string>
     <string name="first_player">First Player</string>
     <string name="second_player">Second Player</string>
+    <string name="no_name">No Name</string>
 </resources>
