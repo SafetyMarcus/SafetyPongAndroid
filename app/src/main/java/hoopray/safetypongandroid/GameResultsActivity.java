@@ -5,6 +5,7 @@ import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.transition.ChangeTransform;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import butterknife.Bind;
@@ -26,6 +27,8 @@ public class GameResultsActivity extends AppCompatActivity
 	EditText firstScore;
 	@Bind(R.id.second_score)
 	EditText secondScore;
+	@Bind(R.id.save)
+	View save;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -50,7 +53,8 @@ public class GameResultsActivity extends AppCompatActivity
 		AnimatorSet set = new AnimatorSet();
 		ObjectAnimator firstAlpha = ObjectAnimator.ofFloat(firstScore, "alpha", 0, 1);
 		ObjectAnimator secondAlpha = ObjectAnimator.ofFloat(secondScore, "alpha", 0, 1);
-		set.playTogether(firstAlpha, secondAlpha);
+		ObjectAnimator saveAlpha = ObjectAnimator.ofFloat(save, "alpha", 0, 1);
+		set.playTogether(firstAlpha, secondAlpha, saveAlpha);
 		set.setStartDelay(500);
 		set.start();
 	}
