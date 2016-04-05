@@ -5,4 +5,6 @@
     <string name="first_player">First Player</string>
     <string name="second_player">Second Player</string>
     <string name="no_name">No Name</string>
+    <string name="first_player_score">first player score</string>
+    <string name="second_player_score">second player score</string>
 </resources>

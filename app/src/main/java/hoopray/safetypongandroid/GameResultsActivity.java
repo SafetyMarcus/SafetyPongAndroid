@@ -1,8 +1,11 @@
 package hoopray.safetypongandroid;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.transition.ChangeTransform;
+import android.widget.EditText;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -19,6 +22,10 @@ public class GameResultsActivity extends AppCompatActivity
 	TextView firstChallenger;
 	@Bind(R.id.second_challenger)
 	TextView secondChallenger;
+	@Bind(R.id.first_score)
+	EditText firstScore;
+	@Bind(R.id.second_score)
+	EditText secondScore;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -39,5 +46,12 @@ public class GameResultsActivity extends AppCompatActivity
 
 		if(SafetyApplication.is21Plus)
 			startPostponedEnterTransition();
+
+		AnimatorSet set = new AnimatorSet();
+		ObjectAnimator firstAlpha = ObjectAnimator.ofFloat(firstScore, "alpha", 0, 1);
+		ObjectAnimator secondAlpha = ObjectAnimator.ofFloat(secondScore, "alpha", 0, 1);
+		set.playTogether(firstAlpha, secondAlpha);
+		set.setStartDelay(500);
+		set.start();
 	}
 }

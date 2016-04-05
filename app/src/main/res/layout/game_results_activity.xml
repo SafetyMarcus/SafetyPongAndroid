@@ -20,6 +20,16 @@
         android:layout_marginTop="24dp"
         android:transitionName="@string/first_challenger"/>
 
+    <EditText
+        style="@style/ChallengeEditText"
+        android:id="@+id/first_score"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/first_challenger"
+        android:layout_margin="16dp"
+        android:alpha="0"
+        android:hint="@string/first_player_score"/>
+
     <TextView
         style="@style/FinalChallengerText"
         android:id="@+id/second_challenger"
@@ -30,4 +40,14 @@
         android:layout_marginLeft="24dp"
         android:layout_centerVertical="true"
         android:transitionName="@string/second_challenger"/>
+
+    <EditText
+        style="@style/ChallengeEditText"
+        android:id="@+id/second_score"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/second_challenger"
+        android:layout_margin="16dp"
+        android:alpha="0"
+        android:hint="@string/second_player_score"/>
 </RelativeLayout>
