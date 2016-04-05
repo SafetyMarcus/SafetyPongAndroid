@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:focusableInTouchMode="true"
+                android:background="@color/colorPrimary">
+
+    <RelativeLayout
+        android:layout_width="@dimen/card_width"
+        android:layout_height="@dimen/card_height"
+        android:background="@drawable/rounded_white_card"
+        android:elevation="4dp"
+        android:layout_centerInParent="true">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:translationY="@dimen/p1_translation">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/p1_input"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        style="@style/ChallengeEditText"
+                        android:id="@+id/first_challenger"
+                        android:layout_width="@dimen/player_text_width"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/first_player"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <TextView
+                    style="@style/FinalChallengerText"
+                    android:id="@+id/first_challenger_final"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0"/>
+            </RelativeLayout>
+
+            <ImageButton
+                style="@style/NextButton"
+                android:id="@+id/p1_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <TextView
+            style="@style/VsTextView"
+            android:id="@+id/v"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:translationX="@dimen/nagative_vs_translation"
+            android:alpha="0"
+            android:text="V"/>
+
+        <TextView
+            style="@style/VsTextView"
+            android:id="@+id/s"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:translationX="@dimen/vs_translation"
+            android:alpha="0"
+            android:text="S"/>
+
+        <LinearLayout
+            android:id="@+id/p2_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:translationY="@dimen/p2_translation">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/p2_input"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0">
+
+                    <EditText
+                        style="@style/ChallengeEditText"
+                        android:id="@+id/second_challenger"
+                        android:layout_width="@dimen/player_text_width"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/second_player"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <TextView
+                    style="@style/FinalChallengerText"
+                    android:id="@+id/second_challenger_final"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0"/>
+            </RelativeLayout>
+
+            <ImageButton
+                style="@style/NextButton"
+                android:id="@+id/p2_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:alpha="0"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

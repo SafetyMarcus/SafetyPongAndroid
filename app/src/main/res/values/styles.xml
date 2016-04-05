@@ -17,4 +17,33 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
+    <style name="ChallengeEditText">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/textColor</item>
+    </style>
+
+    <style name="FinalChallengerText">
+        <item name="android:textSize">32sp</item>
+        <item name="android:textColor">@color/textColor</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_centerHorizontal">true</item>
+    </style>
+
+    <style name="NextButton">
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:layout_marginLeft">12dp</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:src">@drawable/right_arrow</item>
+        <item name="android:tint">@color/colorAccent</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+    </style>
+
+    <style name="VsTextView">
+        <item name="android:textSize">32sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
 </resources>
