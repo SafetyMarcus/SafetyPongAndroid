@@ -2,4 +2,6 @@
 <resources>
     <string name="floating_card">floating_card</string>
     <string name="background">background</string>
+    <string name="first_challenger">first challenger</string>
+    <string name="second_challenger">second challenger</string>
 </resources>

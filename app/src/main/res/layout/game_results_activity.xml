@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
                 android:id="@+id/background"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -10,33 +11,23 @@
 
     <TextView
         style="@style/FinalChallengerText"
-        android:id="@+id/first_challenger_final"
+        android:id="@+id/first_challenger"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:alpha="0"/>
-
-    <TextView
-        style="@style/VsTextView"
-        android:id="@+id/v"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:translationX="@dimen/nagative_vs_translation"
-        android:alpha="0"
-        android:text="V"/>
-
-    <TextView
-        style="@style/VsTextView"
-        android:id="@+id/s"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:translationX="@dimen/vs_translation"
-        android:alpha="0"
-        android:text="S"/>
+        android:layout_alignParentLeft="true"
+        tools:text="First Player"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="24dp"
+        android:transitionName="@string/first_challenger"/>
 
     <TextView
         style="@style/FinalChallengerText"
-        android:id="@+id/second_challenger_final"
+        android:id="@+id/second_challenger"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:alpha="0"/>
+        tools:text="Second Player"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="24dp"
+        android:layout_centerVertical="true"
+        android:transitionName="@string/second_challenger"/>
 </RelativeLayout>

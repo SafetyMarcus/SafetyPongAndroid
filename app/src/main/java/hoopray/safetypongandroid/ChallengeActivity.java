@@ -11,9 +11,7 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.transition.Explode;
 import android.view.View;
-import android.view.Window;
 import android.view.animation.Interpolator;
 import android.widget.TextView;
 import butterknife.Bind;
@@ -174,6 +172,11 @@ public class ChallengeActivity extends AppCompatActivity
 				sharedElements.add(Pair.create(background, backgroundName));
 			}
 
+			sharedElements.add(Pair.create(findViewById(R.id.first_challenger_final), getString(R.string.first_challenger)));
+			sharedElements.add(Pair.create(findViewById(R.id.second_challenger_final), getString(R.string.second_challenger)));
+
+			intent.putExtra(GameResultsActivity.FIRST_NAME, firstChallengerFinalView.getText());
+			intent.putExtra(GameResultsActivity.SECOND_NAME, secondChallengerFinalView.getText());
 			Pair<View, String>[] views = sharedElements.toArray(new Pair[sharedElements.size()]);
 			ActivityCompat.startActivity(ChallengeActivity.this, intent,
 					ActivityOptionsCompat.makeSceneTransitionAnimation(ChallengeActivity.this,
