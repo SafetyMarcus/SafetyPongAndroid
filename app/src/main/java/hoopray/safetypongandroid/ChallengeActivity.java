@@ -38,6 +38,11 @@ public class ChallengeActivity extends AppCompatActivity
 	@Bind(R.id.second_challenger_final)
 	TextView secondChallengerFinalView;
 
+	@Bind(R.id.first_challenger)
+	View firstEditText;
+	@Bind(R.id.second_challenger)
+	View secondEditText;
+
 	AnimatorSet vsSet;
 	AnimatorSet hideSet;
 	AnimatorSet secondarySet;
@@ -63,6 +68,9 @@ public class ChallengeActivity extends AppCompatActivity
 
 		if(SafetyApplication.is21Plus)
 			getWindow().setEnterTransition(new Explode());
+
+		p2Next.setClickable(false);
+		secondEditText.setEnabled(false);
 	}
 
 	@OnClick(R.id.p1_next)
@@ -80,6 +88,10 @@ public class ChallengeActivity extends AppCompatActivity
 
 		vsSet.playTogether(vAnimator, sAnimator, vAlpha, sAlpha);
 		vsSet.start();
+		p1Next.setClickable(false);
+		p2Next.setClickable(true);
+		firstEditText.setEnabled(false);
+		secondEditText.setEnabled(true);
 
 		hideSet = new AnimatorSet();
 		ObjectAnimator hideFirstAlpha = ObjectAnimator.ofFloat(firstChallengerLayout, "alpha", 1, 0);
@@ -117,6 +129,8 @@ public class ChallengeActivity extends AppCompatActivity
 		finalSet.playTogether(hideFirstAlpha, showFirstFinalAlpha, hideFirstNext);
 		finalSet.start();
 
+		p2Next.setClickable(false);
+		secondEditText.setEnabled(false);
 		hasAnimatedSecond = true;
 	}
 
@@ -130,6 +144,8 @@ public class ChallengeActivity extends AppCompatActivity
 			finalSet.setInterpolator(interpolator);
 			finalSet.start();
 			hasAnimatedSecond = false;
+			p2Next.setClickable(true);
+			secondEditText.setEnabled(true);
 			return;
 		}
 		if(hasAnimatedFirst)
@@ -146,6 +162,11 @@ public class ChallengeActivity extends AppCompatActivity
 			secondarySet.setStartDelay(0);
 			secondarySet.start();
 			hasAnimatedFirst = false;
+
+			p1Next.setClickable(true);
+			firstEditText.setEnabled(true);
+			p2Next.setClickable(false);
+			secondEditText.setEnabled(false);
 			return;
 		}
 
