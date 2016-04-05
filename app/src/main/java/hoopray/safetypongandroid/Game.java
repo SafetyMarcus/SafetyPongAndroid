@@ -7,6 +7,8 @@ public class Game
 {
     private String playerOneId;
     private String playerTwoId;
+    private String playerOneName;
+    private String playerTwoName;
     private int playerOneScore;
     private int playerTwoScore;
     private int playerOneRatingBefore;
@@ -35,6 +37,26 @@ public class Game
     public void setPlayerTwoId(String playerTwoId)
     {
         this.playerTwoId = playerTwoId;
+    }
+
+    public String getPlayerOneName()
+    {
+        return playerOneName;
+    }
+
+    public void setPlayerOneName(String playerOneName)
+    {
+        this.playerOneName = playerOneName;
+    }
+
+    public String getPlayerTwoName()
+    {
+        return playerTwoName;
+    }
+
+    public void setPlayerTwoName(String playerTwoName)
+    {
+        this.playerTwoName = playerTwoName;
     }
 
     public int getPlayerOneScore()

@@ -13,7 +13,6 @@ public class SafetyPong extends Application
 
     private static SafetyPong app;
 
-    public Firebase firebase;
     public String currentLeagueKey;
     public League currentLeague;
 
@@ -23,10 +22,10 @@ public class SafetyPong extends Application
         super.onCreate();
         app = this;
         Firebase.setAndroidContext(this);
-        firebase = new Firebase("https://safetypong.firebaseio.com/");
 //        Firebase safetyPong = firebase.child("leagues").child(UUID.randomUUID().toString());
 //        League league = new League("SafetyPong", "SafetyWow");
 //        safetyPong.setValue(league);
+        currentLeagueKey = PreferenceManager.getStringPref(CURRENT_LEAGUE_KEY, "");
     }
 
     public static SafetyPong getInstance()

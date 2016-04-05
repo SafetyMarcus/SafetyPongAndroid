@@ -1,5 +1,6 @@
 package hoopray.safetypongandroid;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.widget.EditText;
 
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 
@@ -47,7 +49,7 @@ public class LeagueLoginFragment extends Fragment
             {
                 final String id = leagueId.getText().toString();
                 final String passwordText = password.getText().toString();
-                Query query = SafetyPong.getInstance().firebase.orderByChild(LEAGUES);
+                Query query = new Firebase(FirebaseConstants.FIREBASE_PATH).orderByChild(LEAGUES);
                 query.addChildEventListener(new LoginQueryListener(id, passwordText));
             }
         });
@@ -76,9 +78,9 @@ public class LeagueLoginFragment extends Fragment
                     if(passwordText.equalsIgnoreCase(map.get(FirebaseConstants.PASSWORD)))
                     {
                         SafetyPong app = SafetyPong.getInstance();
-                        app.currentLeague = snapshot.getValue(League.class);
-                        app.currentLeagueKey = snapshot.getKey();
-                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, new NewPlayerFragment()).commit();
+                        app.setCurrentLeague(snapshot.getKey(), snapshot.getValue(League.class));
+                        Intent intent = new Intent(getActivity(), LeagueActivity.class);
+                        startActivity(intent);
                     }
                 }
 
