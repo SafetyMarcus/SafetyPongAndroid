@@ -7,4 +7,5 @@
     <string name="no_name">No Name</string>
     <string name="first_player_score">first player score</string>
     <string name="second_player_score">second player score</string>
+    <string name="save">Save</string>
 </resources>

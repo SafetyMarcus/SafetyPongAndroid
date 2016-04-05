@@ -49,4 +49,18 @@
     </style>
 
     <style name="NoBar" parent="Theme.AppCompat.Light.NoActionBar"/>
+
+    <style name="Button">
+        <item name="android:background">@drawable/rounded_blue_background</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:layout_margin">16dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:gravity">center</item>
+        <item name="android:text">@string/save</item>
+    </style>
 </resources>

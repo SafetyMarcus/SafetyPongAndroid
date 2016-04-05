@@ -58,6 +58,12 @@
             android:layout_margin="16dp"
             android:alpha="0"
             android:hint="@string/second_player_score"/>
+
+        <Button
+            style="@style/Button"
+            android:id="@+id/save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
     </RelativeLayout>
 
 </RelativeLayout>
