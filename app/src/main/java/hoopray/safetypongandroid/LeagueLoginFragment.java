@@ -77,7 +77,7 @@ public class LeagueLoginFragment extends Fragment
                     HashMap<String, String> map = (HashMap<String, String>) snapshot.getValue();
                     if(passwordText.equalsIgnoreCase(map.get(FirebaseConstants.PASSWORD)))
                     {
-                        SafetyPong app = SafetyPong.getInstance();
+                        SafetyApplication app = SafetyApplication.getInstance();
                         app.setCurrentLeague(snapshot.getKey(), snapshot.getValue(League.class));
                         Intent intent = new Intent(getActivity(), LeagueActivity.class);
                         startActivity(intent);

@@ -35,7 +35,7 @@ public class PlayerListFragment extends Fragment
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        Firebase ref = new Firebase(FIREBASE_PATH + '/' + PLAYERS + '/' + SafetyPong.getInstance().currentLeagueKey);
+        Firebase ref = new Firebase(FIREBASE_PATH + '/' + PLAYERS + '/' + SafetyApplication.getInstance().currentLeagueKey);
         adapter = new FirebaseRecyclerAdapter<Player, PlayerViewHolder>(Player.class, R.layout.player_list_item, PlayerViewHolder.class, ref)
         {
             @Override

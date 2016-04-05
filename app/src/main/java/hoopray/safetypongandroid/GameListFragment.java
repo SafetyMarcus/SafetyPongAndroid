@@ -1,13 +1,12 @@
 package hoopray.safetypongandroid;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -35,7 +34,7 @@ public class GameListFragment extends Fragment
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        Firebase ref = new Firebase(FIREBASE_PATH + '/' + GAMES + '/' + SafetyPong.getInstance().currentLeagueKey);
+        Firebase ref = new Firebase(FIREBASE_PATH + '/' + GAMES + '/' + SafetyApplication.getInstance().currentLeagueKey);
         adapter = new FirebaseRecyclerAdapter<Game, PlayerViewHolder>(Game.class, R.layout.player_list_item, PlayerViewHolder.class, ref)
         {
             @Override
@@ -47,21 +46,16 @@ public class GameListFragment extends Fragment
         };
         recyclerView.setAdapter(adapter);
 
-        return recyclerView;
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
-    {
         getActivity().findViewById(R.id.fab).setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
-
+                startActivity(new Intent(getActivity(), ChallengeActivity.class));
             }
         });
-        super.onCreateOptionsMenu(menu, inflater);
+
+        return recyclerView;
     }
 
     @Override

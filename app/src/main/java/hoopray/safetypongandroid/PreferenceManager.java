@@ -12,7 +12,7 @@ public class PreferenceManager
 
     public static SharedPreferences getSharedPreferences()
     {
-        return SafetyPong.getInstance().getSharedPreferences(ASSISTANT_MANAGER_PREFERENCES, Context.MODE_PRIVATE);
+        return SafetyApplication.getInstance().getSharedPreferences(ASSISTANT_MANAGER_PREFERENCES, Context.MODE_PRIVATE);
     }
 
     public static int getIntPref(String key, int defaultValue)
