@@ -24,14 +24,13 @@ import static hoopray.safetypongandroid.FirebaseConstants.PLAYERS;
  */
 public class PlayerListFragment extends Fragment
 {
-    private RecyclerView recyclerView;
     private FirebaseRecyclerAdapter<Player, PlayerViewHolder> adapter;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        recyclerView = (RecyclerView) inflater.inflate(R.layout.recyclerview_layout, container, false);
+        RecyclerView recyclerView = (RecyclerView) inflater.inflate(R.layout.recyclerview_layout, container, false);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 

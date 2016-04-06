@@ -13,6 +13,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import java.util.UUID;
+
 /**
  * @author Marcus Hooper
  */
@@ -20,6 +22,8 @@ public class GameResultsActivity extends AppCompatActivity
 {
 	public static final String FIRST_NAME = "firstName";
 	public static final String SECOND_NAME = "secondName";
+	public static final String FIRST_ID = "firstId";
+	public static final String SECOND_ID = "secondId";
 
 	@Bind(R.id.first_challenger)
 	TextView firstChallenger;
@@ -31,6 +35,9 @@ public class GameResultsActivity extends AppCompatActivity
 	EditText secondScore;
 	@Bind(R.id.save)
 	View save;
+
+	private String firstId;
+	private String secondId;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -48,6 +55,8 @@ public class GameResultsActivity extends AppCompatActivity
 
 		firstChallenger.setText(getIntent().getStringExtra(FIRST_NAME));
 		secondChallenger.setText(getIntent().getStringExtra(SECOND_NAME));
+		firstId = getIntent().hasExtra(FIRST_ID) ? getIntent().getStringExtra(FIRST_ID) : "";
+		secondId = getIntent().hasExtra(SECOND_ID) ? getIntent().getStringExtra(SECOND_ID) : "";
 
 		if(SafetyApplication.is21Plus)
 			startPostponedEnterTransition();
@@ -65,11 +74,13 @@ public class GameResultsActivity extends AppCompatActivity
 	void saveClicked()
 	{
 		Game game = new Game();
+		game.setPlayerOneId(firstId);
+		game.setPlayerTwoId(secondId);
 		game.setPlayerOneName(firstChallenger.getText().toString());
 		game.setPlayerTwoName(secondChallenger.getText().toString());
 		game.setPlayerOneScore(Integer.valueOf(firstScore.getText().toString()));
 		game.setPlayerTwoScore(Integer.valueOf(secondScore.getText().toString()));
-		FirebaseHelper.saveGame(SafetyApplication.getInstance().currentLeagueKey, game);
+		FirebaseHelper.saveGame(UUID.randomUUID().toString(), game);
 		Intent intent = new Intent(GameResultsActivity.this, LeagueActivity.class);
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(intent);

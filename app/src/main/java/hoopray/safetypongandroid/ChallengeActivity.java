@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.Interpolator;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
@@ -22,9 +23,18 @@ import butterknife.OnClick;
 import com.easygoingapps.ThePolice;
 import com.easygoingapps.annotations.Observe;
 import com.easygoingapps.utils.State;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
+
+import static hoopray.safetypongandroid.FirebaseConstants.FIREBASE_PATH;
+import static hoopray.safetypongandroid.FirebaseConstants.PLAYERS;
 
 /**
  * @author Marcus Hooper
@@ -68,6 +78,9 @@ public class ChallengeActivity extends AppCompatActivity
 	@Observe(R.id.second_challenger)
 	public State<String> secondChallenger = new State<>("");
 
+	private String firstId;
+	private String secondId;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
@@ -82,12 +95,48 @@ public class ChallengeActivity extends AppCompatActivity
 		p2Next.setClickable(false);
 		secondEditText.setEnabled(false);
 
-		String[] names = new String[2];
-		names[0] = "Marcus";
-		names[1] = "Dom";
-		ArrayAdapter<String> playerNames = new ArrayAdapter<>(this, R.layout.label, names);
-		firstEditText.setAdapter(playerNames);
-		secondEditText.setAdapter(playerNames);
+		Firebase ref = new Firebase(FIREBASE_PATH + '/' + PLAYERS + '/' + SafetyApplication.getInstance().currentLeagueKey);
+		ref.addListenerForSingleValueEvent(new ValueEventListener()
+		{
+			@Override
+			public void onDataChange(DataSnapshot dataSnapshot)
+			{
+				HashMap<String, Object> players = (HashMap<String, Object>) dataSnapshot.getValue();
+				Set<String> keys = players.keySet();
+				ArrayList<String> names = new ArrayList<>(keys.size());
+				final ArrayList<String> ids = new ArrayList<>(keys.size());
+
+				for(String key : keys)
+				{
+					ids.add(key);
+					String name = ((HashMap<String, String>) players.get(key)).get("name");
+					names.add(name);
+				}
+
+				ArrayAdapter<String> playerNames = new ArrayAdapter<>(ChallengeActivity.this, R.layout.label, names);
+				firstEditText.setAdapter(playerNames);
+				secondEditText.setAdapter(playerNames);
+
+				AdapterView.OnItemClickListener listener = new AdapterView.OnItemClickListener()
+				{
+					@Override
+					public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+					{
+						if(view.getId() == R.id.first_challenger)
+							firstId = ids.get(position);
+						else
+							secondId = ids.get(position);
+					}
+				};
+				firstEditText.setOnItemClickListener(listener);
+				secondEditText.setOnItemClickListener(listener);
+			}
+
+			@Override
+			public void onCancelled(FirebaseError firebaseError)
+			{
+			}
+		});
 	}
 
 	@OnClick(R.id.p1_next)
@@ -186,6 +235,8 @@ public class ChallengeActivity extends AppCompatActivity
 
 			intent.putExtra(GameResultsActivity.FIRST_NAME, firstChallengerFinalView.getText());
 			intent.putExtra(GameResultsActivity.SECOND_NAME, secondChallengerFinalView.getText());
+			intent.putExtra(GameResultsActivity.FIRST_ID, firstId);
+			intent.putExtra(GameResultsActivity.SECOND_ID, secondId);
 			Pair<View, String>[] views = sharedElements.toArray(new Pair[sharedElements.size()]);
 			ActivityCompat.startActivity(ChallengeActivity.this, intent,
 					ActivityOptionsCompat.makeSceneTransitionAnimation(ChallengeActivity.this,
