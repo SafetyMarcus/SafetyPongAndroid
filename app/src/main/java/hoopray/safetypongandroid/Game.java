@@ -5,107 +5,108 @@ package hoopray.safetypongandroid;
  */
 public class Game
 {
-    private String playerOneId;
-    private String playerTwoId;
-    private String playerOneName;
-    private String playerTwoName;
-    private int playerOneScore;
-    private int playerTwoScore;
-    private int playerOneRatingBefore;
-    private int playerTwoRatingBefore;
-    private long dateInMilliseconds;
+	private String playerOneId;
+	private String playerTwoId;
+	private String playerOneName;
+	private String playerTwoName;
+	private int playerOneScore;
+	private int playerTwoScore;
+	private int playerOneRatingBefore;
+	private int playerTwoRatingBefore;
+	private long dateInMilliseconds;
 
-    public Game()
-    {
-    }
+	public Game()
+	{
+		setDateInMilliseconds(System.currentTimeMillis());
+	}
 
-    public String getPlayerOneId()
-    {
-        return playerOneId;
-    }
+	public String getPlayerOneId()
+	{
+		return playerOneId;
+	}
 
-    public void setPlayerOneId(String playerOneId)
-    {
-        this.playerOneId = playerOneId;
-    }
+	public void setPlayerOneId(String playerOneId)
+	{
+		this.playerOneId = playerOneId;
+	}
 
-    public String getPlayerTwoId()
-    {
-        return playerTwoId;
-    }
+	public String getPlayerTwoId()
+	{
+		return playerTwoId;
+	}
 
-    public void setPlayerTwoId(String playerTwoId)
-    {
-        this.playerTwoId = playerTwoId;
-    }
+	public void setPlayerTwoId(String playerTwoId)
+	{
+		this.playerTwoId = playerTwoId;
+	}
 
-    public String getPlayerOneName()
-    {
-        return playerOneName;
-    }
+	public String getPlayerOneName()
+	{
+		return playerOneName;
+	}
 
-    public void setPlayerOneName(String playerOneName)
-    {
-        this.playerOneName = playerOneName;
-    }
+	public void setPlayerOneName(String playerOneName)
+	{
+		this.playerOneName = playerOneName;
+	}
 
-    public String getPlayerTwoName()
-    {
-        return playerTwoName;
-    }
+	public String getPlayerTwoName()
+	{
+		return playerTwoName;
+	}
 
-    public void setPlayerTwoName(String playerTwoName)
-    {
-        this.playerTwoName = playerTwoName;
-    }
+	public void setPlayerTwoName(String playerTwoName)
+	{
+		this.playerTwoName = playerTwoName;
+	}
 
-    public int getPlayerOneScore()
-    {
-        return playerOneScore;
-    }
+	public int getPlayerOneScore()
+	{
+		return playerOneScore;
+	}
 
-    public void setPlayerOneScore(int playerOneScore)
-    {
-        this.playerOneScore = playerOneScore;
-    }
+	public void setPlayerOneScore(int playerOneScore)
+	{
+		this.playerOneScore = playerOneScore;
+	}
 
-    public int getPlayerTwoScore()
-    {
-        return playerTwoScore;
-    }
+	public int getPlayerTwoScore()
+	{
+		return playerTwoScore;
+	}
 
-    public void setPlayerTwoScore(int playerTwoScore)
-    {
-        this.playerTwoScore = playerTwoScore;
-    }
+	public void setPlayerTwoScore(int playerTwoScore)
+	{
+		this.playerTwoScore = playerTwoScore;
+	}
 
-    public int getPlayerOneRatingBefore()
-    {
-        return playerOneRatingBefore;
-    }
+	public int getPlayerOneRatingBefore()
+	{
+		return playerOneRatingBefore;
+	}
 
-    public void setPlayerOneRatingBefore(int playerOneRatingBefore)
-    {
-        this.playerOneRatingBefore = playerOneRatingBefore;
-    }
+	public void setPlayerOneRatingBefore(int playerOneRatingBefore)
+	{
+		this.playerOneRatingBefore = playerOneRatingBefore;
+	}
 
-    public int getPlayerTwoRatingBefore()
-    {
-        return playerTwoRatingBefore;
-    }
+	public int getPlayerTwoRatingBefore()
+	{
+		return playerTwoRatingBefore;
+	}
 
-    public void setPlayerTwoRatingBefore(int playerTwoRatingBefore)
-    {
-        this.playerTwoRatingBefore = playerTwoRatingBefore;
-    }
+	public void setPlayerTwoRatingBefore(int playerTwoRatingBefore)
+	{
+		this.playerTwoRatingBefore = playerTwoRatingBefore;
+	}
 
-    public long getDateInMilliseconds()
-    {
-        return dateInMilliseconds;
-    }
+	public long getDateInMilliseconds()
+	{
+		return dateInMilliseconds;
+	}
 
-    public void setDateInMilliseconds(long dateInMilliseconds)
-    {
-        this.dateInMilliseconds = dateInMilliseconds;
-    }
+	public void setDateInMilliseconds(long dateInMilliseconds)
+	{
+		this.dateInMilliseconds = dateInMilliseconds;
+	}
 }

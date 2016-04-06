@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/background"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:focusableInTouchMode="true"
+                android:transitionName="@string/background"
                 android:background="@color/colorPrimary">
 
     <RelativeLayout
+        android:id="@+id/card_layout"
         android:layout_width="@dimen/card_width"
         android:layout_height="@dimen/card_height"
         android:background="@drawable/rounded_white_card"
         android:elevation="4dp"
+        android:transitionName="@string/floating_card"
         android:layout_centerInParent="true">
 
         <LinearLayout
@@ -28,7 +32,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
-                    <EditText
+                    <AutoCompleteTextView
                         style="@style/ChallengeEditText"
                         android:id="@+id/first_challenger"
                         android:layout_width="@dimen/player_text_width"
@@ -41,6 +45,7 @@
                     android:id="@+id/first_challenger_final"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:transitionName="@string/first_challenger"
                     android:alpha="0"/>
             </RelativeLayout>
 
@@ -86,7 +91,7 @@
                     android:layout_height="wrap_content"
                     android:alpha="0">
 
-                    <EditText
+                    <AutoCompleteTextView
                         style="@style/ChallengeEditText"
                         android:id="@+id/second_challenger"
                         android:layout_width="@dimen/player_text_width"
@@ -99,6 +104,7 @@
                     android:id="@+id/second_challenger_final"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:transitionName="@string/second_challenger"
                     android:alpha="0"/>
             </RelativeLayout>
 

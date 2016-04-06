@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/background"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:focusableInTouchMode="true"
+                android:transitionName="@string/background"
+                android:background="@color/colorPrimary">
+
+    <RelativeLayout
+        android:layout_width="@dimen/card_width"
+        android:layout_height="@dimen/card_height"
+        android:background="@drawable/rounded_white_card"
+        android:elevation="4dp"
+        android:transitionName="@string/floating_card"
+        android:layout_centerInParent="true">
+
+        <TextView
+            style="@style/FinalChallengerText"
+            android:id="@+id/first_challenger"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            tools:text="First Player"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="24dp"
+            android:transitionName="@string/first_challenger"/>
+
+        <EditText
+            style="@style/ChallengeEditText"
+            android:id="@+id/first_score"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/first_challenger"
+            android:layout_margin="16dp"
+            android:inputType="number"
+            android:alpha="0"
+            android:hint="@string/first_player_score"/>
+
+        <TextView
+            style="@style/FinalChallengerText"
+            android:id="@+id/second_challenger"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Second Player"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="24dp"
+            android:layout_centerVertical="true"
+            android:transitionName="@string/second_challenger"/>
+
+        <EditText
+            style="@style/ChallengeEditText"
+            android:id="@+id/second_score"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/second_challenger"
+            android:layout_margin="16dp"
+            android:alpha="0"
+            android:inputType="number"
+            android:hint="@string/second_player_score"/>
+
+        <Button
+            style="@style/Button"
+            android:id="@+id/save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0"/>
+    </RelativeLayout>
+
+</RelativeLayout>

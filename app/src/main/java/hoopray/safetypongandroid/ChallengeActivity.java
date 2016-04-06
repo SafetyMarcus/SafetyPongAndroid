@@ -1,13 +1,21 @@
 package hoopray.safetypongandroid;
 
+import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
-import android.transition.Explode;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.Interpolator;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -15,6 +23,18 @@ import butterknife.OnClick;
 import com.easygoingapps.ThePolice;
 import com.easygoingapps.annotations.Observe;
 import com.easygoingapps.utils.State;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
+
+import static hoopray.safetypongandroid.FirebaseConstants.FIREBASE_PATH;
+import static hoopray.safetypongandroid.FirebaseConstants.PLAYERS;
 
 /**
  * @author Marcus Hooper
@@ -39,9 +59,9 @@ public class ChallengeActivity extends AppCompatActivity
 	TextView secondChallengerFinalView;
 
 	@Bind(R.id.first_challenger)
-	View firstEditText;
+	AutoCompleteTextView firstEditText;
 	@Bind(R.id.second_challenger)
-	View secondEditText;
+	AutoCompleteTextView secondEditText;
 
 	AnimatorSet vsSet;
 	AnimatorSet hideSet;
@@ -58,6 +78,9 @@ public class ChallengeActivity extends AppCompatActivity
 	@Observe(R.id.second_challenger)
 	public State<String> secondChallenger = new State<>("");
 
+	private String firstId;
+	private String secondId;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
@@ -67,16 +90,60 @@ public class ChallengeActivity extends AppCompatActivity
 		ThePolice.watch(this);
 
 		if(SafetyApplication.is21Plus)
-			getWindow().setEnterTransition(new Explode());
+			getWindow().setStatusBarColor(getColor(R.color.colorPrimaryDark));
 
 		p2Next.setClickable(false);
 		secondEditText.setEnabled(false);
+
+		Firebase ref = new Firebase(FIREBASE_PATH + '/' + PLAYERS + '/' + SafetyApplication.getInstance().currentLeagueKey);
+		ref.addListenerForSingleValueEvent(new ValueEventListener()
+		{
+			@Override
+			public void onDataChange(DataSnapshot dataSnapshot)
+			{
+				HashMap<String, Object> players = (HashMap<String, Object>) dataSnapshot.getValue();
+				Set<String> keys = players.keySet();
+				ArrayList<String> names = new ArrayList<>(keys.size());
+				final ArrayList<String> ids = new ArrayList<>(keys.size());
+
+				for(String key : keys)
+				{
+					ids.add(key);
+					String name = ((HashMap<String, String>) players.get(key)).get("name");
+					names.add(name);
+				}
+
+				ArrayAdapter<String> playerNames = new ArrayAdapter<>(ChallengeActivity.this, R.layout.label, names);
+				firstEditText.setAdapter(playerNames);
+				secondEditText.setAdapter(playerNames);
+
+				AdapterView.OnItemClickListener listener = new AdapterView.OnItemClickListener()
+				{
+					@Override
+					public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+					{
+						if(view.getId() == R.id.first_challenger)
+							firstId = ids.get(position);
+						else
+							secondId = ids.get(position);
+					}
+				};
+				firstEditText.setOnItemClickListener(listener);
+				secondEditText.setOnItemClickListener(listener);
+			}
+
+			@Override
+			public void onCancelled(FirebaseError firebaseError)
+			{
+			}
+		});
 	}
 
 	@OnClick(R.id.p1_next)
 	void onFirstNextClick()
 	{
-		firstChallengerFinalView.setText(firstChallenger.getValue());
+		String name = firstChallenger.getValue();
+		firstChallengerFinalView.setText(TextUtils.isEmpty(name) ? getString(R.string.no_name) : name);
 
 		vsSet = new AnimatorSet();
 		ObjectAnimator vAnimator = ObjectAnimator.ofFloat(v, "translationX",
@@ -119,20 +186,63 @@ public class ChallengeActivity extends AppCompatActivity
 	@OnClick(R.id.p2_next)
 	void onFinishClick()
 	{
-		secondChallengerFinalView.setText(secondChallenger.getValue());
+		String name = secondChallenger.getValue();
+		secondChallengerFinalView.setText(TextUtils.isEmpty(name) ? getString(R.string.no_name) : name);
 
 		finalSet = new AnimatorSet();
 		ObjectAnimator hideFirstAlpha = ObjectAnimator.ofFloat(secondChallengerLayout, "alpha", 1, 0);
 		ObjectAnimator showFirstFinalAlpha = ObjectAnimator.ofFloat(secondChallengerFinalView, "alpha", 0, 1);
 		ObjectAnimator hideFirstNext = ObjectAnimator.ofFloat(p2Next, "alpha", 1, 0);
 		finalSet.setStartDelay(100);
-		finalSet.playTogether(hideFirstAlpha, showFirstFinalAlpha, hideFirstNext);
-		finalSet.start();
 
 		p2Next.setClickable(false);
 		secondEditText.setEnabled(false);
 		hasAnimatedSecond = true;
+
+		ObjectAnimator vAlpha = ObjectAnimator.ofFloat(v, "alpha", 1, 0);
+		vAlpha.setStartDelay(400);
+		ObjectAnimator sAlpha = ObjectAnimator.ofFloat(s, "alpha", 1, 0);
+		sAlpha.setStartDelay(400);
+
+		finalSet.playTogether(hideFirstAlpha, showFirstFinalAlpha, hideFirstNext, vAlpha, sAlpha);
+		finalSet.start();
+
+		finalSet.addListener(listener);
 	}
+
+	private SafetyAnimationListener listener = new SafetyAnimationListener()
+	{
+		@Override
+		public void onAnimationEnd(Animator animation)
+		{
+			Intent intent = new Intent(ChallengeActivity.this, GameResultsActivity.class);
+
+			List<Pair<View, String>> sharedElements = new ArrayList<>();
+			if(getResources().getBoolean(R.bool.isLarge))
+			{
+				finalSet.removeListener(this);
+				View cardLayout = findViewById(R.id.card_layout);
+				String transitionName = getString(R.string.floating_card);
+				sharedElements.add(Pair.create(cardLayout, transitionName));
+
+				View background = findViewById(R.id.background);
+				String backgroundName = getString(R.string.background);
+				sharedElements.add(Pair.create(background, backgroundName));
+			}
+
+			sharedElements.add(Pair.create(findViewById(R.id.first_challenger_final), getString(R.string.first_challenger)));
+			sharedElements.add(Pair.create(findViewById(R.id.second_challenger_final), getString(R.string.second_challenger)));
+
+			intent.putExtra(GameResultsActivity.FIRST_NAME, firstChallengerFinalView.getText());
+			intent.putExtra(GameResultsActivity.SECOND_NAME, secondChallengerFinalView.getText());
+			intent.putExtra(GameResultsActivity.FIRST_ID, firstId);
+			intent.putExtra(GameResultsActivity.SECOND_ID, secondId);
+			Pair<View, String>[] views = sharedElements.toArray(new Pair[sharedElements.size()]);
+			ActivityCompat.startActivity(ChallengeActivity.this, intent,
+					ActivityOptionsCompat.makeSceneTransitionAnimation(ChallengeActivity.this,
+							views).toBundle());
+		}
+	};
 
 	@Override
 	public void onBackPressed()

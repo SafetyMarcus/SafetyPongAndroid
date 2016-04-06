@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowActionBar">false</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -45,5 +46,21 @@
         <item name="android:textStyle">bold</item>
         <item name="android:layout_centerInParent">true</item>
         <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="NoBar" parent="Theme.AppCompat.Light.NoActionBar"/>
+
+    <style name="Button">
+        <item name="android:background">@drawable/rounded_blue_background</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:layout_margin">16dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:gravity">center</item>
+        <item name="android:text">@string/save</item>
     </style>
 </resources>
