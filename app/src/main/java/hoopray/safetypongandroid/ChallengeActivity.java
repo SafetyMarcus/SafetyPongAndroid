@@ -13,6 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.Interpolator;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -47,9 +49,9 @@ public class ChallengeActivity extends AppCompatActivity
 	TextView secondChallengerFinalView;
 
 	@Bind(R.id.first_challenger)
-	View firstEditText;
+	AutoCompleteTextView firstEditText;
 	@Bind(R.id.second_challenger)
-	View secondEditText;
+	AutoCompleteTextView secondEditText;
 
 	AnimatorSet vsSet;
 	AnimatorSet hideSet;
@@ -79,6 +81,13 @@ public class ChallengeActivity extends AppCompatActivity
 
 		p2Next.setClickable(false);
 		secondEditText.setEnabled(false);
+
+		String[] names = new String[2];
+		names[0] = "Marcus";
+		names[1] = "Dom";
+		ArrayAdapter<String> playerNames = new ArrayAdapter<>(this, R.layout.label, names);
+		firstEditText.setAdapter(playerNames);
+		secondEditText.setAdapter(playerNames);
 	}
 
 	@OnClick(R.id.p1_next)

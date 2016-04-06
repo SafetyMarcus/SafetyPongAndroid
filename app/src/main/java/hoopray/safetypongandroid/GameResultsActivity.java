@@ -2,6 +2,7 @@ package hoopray.safetypongandroid;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.transition.ChangeTransform;
@@ -10,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * @author Marcus Hooper
@@ -57,5 +59,19 @@ public class GameResultsActivity extends AppCompatActivity
 		set.playTogether(firstAlpha, secondAlpha, saveAlpha);
 		set.setStartDelay(500);
 		set.start();
+	}
+
+	@OnClick(R.id.save)
+	void saveClicked()
+	{
+		Game game = new Game();
+		game.setPlayerOneName(firstChallenger.getText().toString());
+		game.setPlayerTwoName(secondChallenger.getText().toString());
+		game.setPlayerOneScore(Integer.valueOf(firstScore.getText().toString()));
+		game.setPlayerTwoScore(Integer.valueOf(secondScore.getText().toString()));
+		FirebaseHelper.saveGame(SafetyApplication.getInstance().currentLeagueKey, game);
+		Intent intent = new Intent(GameResultsActivity.this, LeagueActivity.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(intent);
 	}
 }

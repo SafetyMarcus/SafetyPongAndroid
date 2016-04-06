@@ -28,10 +28,4 @@ public class MainActivity extends AppCompatActivity
 		if(!TextUtils.isEmpty(SafetyApplication.getInstance().currentLeagueKey))
 			startActivity(new Intent(this, LeagueActivity.class));
 	}
-
-	@OnClick(R.id.fab)
-	void onClick()
-	{
-		startActivity(new Intent(MainActivity.this, ChallengeActivity.class));
-	}
 }

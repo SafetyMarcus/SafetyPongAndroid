@@ -23,7 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-                <EditText
+                <AutoCompleteTextView
                     style="@style/ChallengeEditText"
                     android:id="@+id/first_challenger"
                     android:layout_width="@dimen/player_text_width"
@@ -82,7 +82,7 @@
                 android:layout_height="wrap_content"
                 android:alpha="0">
 
-                <EditText
+                <AutoCompleteTextView
                     style="@style/ChallengeEditText"
                     android:id="@+id/second_challenger"
                     android:layout_width="@dimen/player_text_width"

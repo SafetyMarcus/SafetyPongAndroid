@@ -28,6 +28,7 @@
         android:layout_below="@id/first_challenger"
         android:layout_margin="16dp"
         android:alpha="0"
+        android:inputType="number"
         android:hint="@string/first_player_score"/>
 
     <TextView
@@ -49,6 +50,7 @@
         android:layout_below="@id/second_challenger"
         android:layout_margin="16dp"
         android:alpha="0"
+        android:inputType="number"
         android:hint="@string/second_player_score"/>
 
     <Button
