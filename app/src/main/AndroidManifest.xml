@@ -23,7 +23,6 @@
         </activity>
         <activity android:name=".ChallengeActivity" android:theme="@style/NoBar"/>
         <activity android:name=".GameResultsActivity" android:theme="@style/NoBar"/>
-        <activity android:name=".ChallengeActivity"/>
 
         <activity
             android:name=".LeagueActivity"
