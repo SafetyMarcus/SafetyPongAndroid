@@ -12,6 +12,7 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.firebase.client.DataSnapshot;
 
 import java.util.UUID;
 
@@ -35,9 +36,14 @@ public class GameResultsActivity extends AppCompatActivity
 	EditText secondScore;
 	@Bind(R.id.save)
 	View save;
+	@Bind(R.id.updating)
+	View updating;
 
 	private String firstId;
 	private String secondId;
+
+	private Player firstPlayer;
+	private Player secondPlayer;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -73,16 +79,39 @@ public class GameResultsActivity extends AppCompatActivity
 	@OnClick(R.id.save)
 	void saveClicked()
 	{
-		Game game = new Game();
-		game.setPlayerOneId(firstId);
-		game.setPlayerTwoId(secondId);
-		game.setPlayerOneName(firstChallenger.getText().toString());
-		game.setPlayerTwoName(secondChallenger.getText().toString());
-		game.setPlayerOneScore(Integer.valueOf(firstScore.getText().toString()));
-		game.setPlayerTwoScore(Integer.valueOf(secondScore.getText().toString()));
-		FirebaseHelper.saveGame(UUID.randomUUID().toString(), game);
-		Intent intent = new Intent(GameResultsActivity.this, LeagueActivity.class);
-		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		startActivity(intent);
+		updating.setVisibility(View.VISIBLE);
+
+		FirebaseHelper.getPlayerReferences().addListenerForSingleValueEvent(new SingleUpdateListener()
+		{
+			@Override
+			public void onDataChange(DataSnapshot dataSnapshot)
+			{
+				int firstPlayerScore = Integer.valueOf(firstScore.getText().toString());
+				int secondPlayerScore = Integer.valueOf(secondScore.getText().toString());
+
+				Game game = new Game();
+				game.setPlayerOneId(firstId);
+				game.setPlayerTwoId(secondId);
+				game.setPlayerOneName(firstChallenger.getText().toString());
+				game.setPlayerTwoName(secondChallenger.getText().toString());
+				game.setPlayerOneScore(firstPlayerScore);
+				game.setPlayerTwoScore(secondPlayerScore);
+				FirebaseHelper.saveGame(UUID.randomUUID().toString(), game);
+
+				for(DataSnapshot next : dataSnapshot.getChildren())
+				{
+					if(next.getKey().equals(firstId))
+						firstPlayer = next.getValue(Player.class);
+					else if(next.getKey().equals(secondId))
+						secondPlayer = next.getValue(Player.class);
+				}
+
+				HelperFunctions.applyRatingChange(firstPlayer, secondPlayer, firstId, secondId,
+						firstPlayerScore, secondPlayerScore, firstPlayerScore > secondPlayerScore ? 1 : 0);
+				Intent intent = new Intent(GameResultsActivity.this, LeagueActivity.class);
+				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(intent);
+			}
+		});
 	}
 }
