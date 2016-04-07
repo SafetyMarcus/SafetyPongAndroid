@@ -27,4 +27,9 @@ public class FirebaseHelper
 	{
 		return new Firebase(FIREBASE_PATH + '/' + PLAYERS + '/' + SafetyApplication.getInstance().currentLeagueKey);
 	}
+
+	public static Firebase getGamesReferences()
+	{
+		return new Firebase(FIREBASE_PATH + '/' + GAMES + '/' + SafetyApplication.getInstance().currentLeagueKey);
+	}
 }
