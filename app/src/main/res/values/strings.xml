@@ -17,4 +17,5 @@
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="games">Games</string>
     <string name="updating_player_ratings">Updating Player Ratings</string>
+    <string name="player_name">Player Name</string>
 </resources>
