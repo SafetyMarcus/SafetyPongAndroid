@@ -39,7 +39,7 @@ public class AddPlayerDialog extends DialogFragment
 	{
 		Player player = new Player();
 		player.setName(playerName.getText().toString());
-		player.setRating(1000);
+		player.setRating(1500);
 		FirebaseHelper.savePlayer(UUID.randomUUID().toString(), player);
 		dismissAllowingStateLoss();
 	}
