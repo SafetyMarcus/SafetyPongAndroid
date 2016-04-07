@@ -24,17 +24,12 @@ import com.easygoingapps.ThePolice;
 import com.easygoingapps.annotations.Observe;
 import com.easygoingapps.utils.State;
 import com.firebase.client.DataSnapshot;
-import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-
-import static hoopray.safetypongandroid.FirebaseConstants.FIREBASE_PATH;
-import static hoopray.safetypongandroid.FirebaseConstants.PLAYERS;
 
 /**
  * @author Marcus Hooper
@@ -95,48 +90,64 @@ public class ChallengeActivity extends AppCompatActivity
 		p2Next.setClickable(false);
 		secondEditText.setEnabled(false);
 
-		Firebase ref = new Firebase(FIREBASE_PATH + '/' + PLAYERS + '/' + SafetyApplication.getInstance().currentLeagueKey);
-		ref.addListenerForSingleValueEvent(new ValueEventListener()
+		FirebaseHelper.getPlayerReferences().addListenerForSingleValueEvent(new SingleUpdateListener()
 		{
 			@Override
 			public void onDataChange(DataSnapshot dataSnapshot)
 			{
-				HashMap<String, Object> players = (HashMap<String, Object>) dataSnapshot.getValue();
-				Set<String> keys = players.keySet();
-				ArrayList<String> names = new ArrayList<>(keys.size());
-				final ArrayList<String> ids = new ArrayList<>(keys.size());
+				final ArrayList<String> ids = new ArrayList<>();
+				final ArrayList<String> names = new ArrayList<>();
 
-				for(String key : keys)
+				for(DataSnapshot next : dataSnapshot.getChildren())
 				{
-					ids.add(key);
-					String name = ((HashMap<String, String>) players.get(key)).get("name");
-					names.add(name);
+					ids.add(next.getKey());
+					names.add(next.getValue(Player.class).getName());
 				}
 
 				ArrayAdapter<String> playerNames = new ArrayAdapter<>(ChallengeActivity.this, R.layout.label, names);
 				firstEditText.setAdapter(playerNames);
 				secondEditText.setAdapter(playerNames);
 
-				AdapterView.OnItemClickListener listener = new AdapterView.OnItemClickListener()
+				firstEditText.setOnItemClickListener(new AdapterView.OnItemClickListener()
 				{
 					@Override
 					public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 					{
-						if(view.getId() == R.id.first_challenger)
-							firstId = ids.get(position);
-						else
-							secondId = ids.get(position);
+						firstId = getIdFromPositionInArrayOfValue(ids, names, firstEditText.getText().toString(), position);
 					}
-				};
-				firstEditText.setOnItemClickListener(listener);
-				secondEditText.setOnItemClickListener(listener);
-			}
-
-			@Override
-			public void onCancelled(FirebaseError firebaseError)
-			{
+				});
+				secondEditText.setOnItemClickListener(new AdapterView.OnItemClickListener()
+				{
+					@Override
+					public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+					{
+						secondId = getIdFromPositionInArrayOfValue(ids, names, secondEditText.getText().toString(), position);
+					}
+				});
 			}
 		});
+	}
+
+	private String getIdFromPositionInArrayOfValue(ArrayList<String> ids, ArrayList<String> names, String name, int position)
+	{
+		int current = 0;
+		String id = null;
+		for(int i = 0; i < names.size(); i++)
+		{
+			String currentName = names.get(i);
+			if(name.equals(currentName))
+			{
+				if(current == position)
+				{
+					id = ids.get(i);
+					break;
+				}
+				else
+					current++;
+			}
+		}
+
+		return id;
 	}
 
 	@OnClick(R.id.p1_next)
