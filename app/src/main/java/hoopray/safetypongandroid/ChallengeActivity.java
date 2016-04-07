@@ -26,10 +26,7 @@ import com.easygoingapps.utils.State;
 import com.firebase.client.DataSnapshot;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Marcus Hooper
@@ -85,7 +82,7 @@ public class ChallengeActivity extends AppCompatActivity
 		ThePolice.watch(this);
 
 		if(SafetyApplication.is21Plus)
-			getWindow().setStatusBarColor(getColor(R.color.colorPrimaryDark));
+			getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
 
 		p2Next.setClickable(false);
 		secondEditText.setEnabled(false);

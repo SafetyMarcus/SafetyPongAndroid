@@ -55,7 +55,7 @@ public class GameResultsActivity extends AppCompatActivity
 		if(SafetyApplication.is21Plus)
 		{
 			getWindow().setEnterTransition(new ChangeTransform());
-			getWindow().setStatusBarColor(getColor(R.color.colorPrimaryDark));
+			getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
 			postponeEnterTransition();
 		}
 
