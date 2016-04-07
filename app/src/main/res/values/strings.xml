@@ -11,11 +11,11 @@
     <string name="league_id">League ID</string>
     <string name="password">Password</string>
     <string name="name">Name</string>
-    <string name="initial_rating">Initial Rating</string>
     <string name="save">save</string>
     <string name="title_activity_league">LeagueActivity</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="games">Games</string>
     <string name="updating_player_ratings">Updating Player Ratings</string>
     <string name="player_name">Player Name</string>
+    <string name="rating">Rating</string>
 </resources>
