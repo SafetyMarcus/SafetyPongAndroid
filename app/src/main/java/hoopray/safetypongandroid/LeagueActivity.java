@@ -1,9 +1,7 @@
 package hoopray.safetypongandroid;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,110 +9,112 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
-public class LeagueActivity extends AppCompatActivity
+import java.lang.ref.WeakReference;
+
+public class LeagueActivity extends AppCompatActivity implements PlusFragmentManager
 {
+	@Bind(R.id.fab)
+	FloatingActionButton fab;
+	@Bind(R.id.container)
+	ViewPager mViewPager;
+	@Bind(R.id.tabs)
+	TabLayout tabLayout;
 
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
-    private SectionsPagerAdapter mSectionsPagerAdapter;
+	private WeakReference<PlusFragment> plusFragmentReference = new WeakReference<>(null);
+	private ViewPager.OnPageChangeListener listener;
 
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
-    private ViewPager mViewPager;
+	@Override
+	protected void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_league);
+		ButterKnife.bind(this);
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_league);
-        ButterKnife.bind(this);
+		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+		setSupportActionBar(toolbar);
+		SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+		mViewPager.setAdapter(mSectionsPagerAdapter);
+		tabLayout.setupWithViewPager(mViewPager);
+		listener = new ViewPager.OnPageChangeListener()
+		{
+			@Override
+			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels)
+			{
+			}
 
-        // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+			@Override
+			public void onPageSelected(int position)
+			{
+				plusFragmentReference = new WeakReference<>((PlusFragment) getSupportFragmentManager()
+						.findFragmentByTag("android:switcher:" + R.id.container + ":" + mViewPager.getCurrentItem()));
+				fab.setImageDrawable(plusFragmentReference.get().getPlusDrawable());
+			}
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(mViewPager);
+			@Override
+			public void onPageScrollStateChanged(int state)
+			{
+			}
+		};
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-    }
+		mViewPager.addOnPageChangeListener(listener);
+		fab.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				plusFragmentReference.get().onPlusClicked();
+			}
+		});
+	}
 
-    @OnClick(R.id.fab)
-    void onClick()
-    {
-        startActivity(new Intent(LeagueActivity.this, ChallengeActivity.class));
-    }
+	@Override
+	public void instantiatePlus()
+	{
+		listener.onPageSelected(0);
+	}
 
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter
-    {
+	public class SectionsPagerAdapter extends FragmentPagerAdapter
+	{
+		public SectionsPagerAdapter(FragmentManager fm)
+		{
+			super(fm);
+		}
 
-        public SectionsPagerAdapter(FragmentManager fm)
-        {
-            super(fm);
-        }
+		@Override
+		public Fragment getItem(int position)
+		{
+			switch(position)
+			{
+				default:
+				case 0:
+					return new PlayerListFragment();
+				case 1:
+					return new GameListFragment();
+			}
+		}
 
-        @Override
-        public Fragment getItem(int position)
-        {
-            switch(position)
-            {
-                default:
-                case 0:
-                    return new PlayerListFragment();
-                case 1:
-                    return new GameListFragment();
-            }
-        }
+		@Override
+		public int getCount()
+		{
+			return 2;
+		}
 
-        @Override
-        public int getCount()
-        {
-            return 2;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position)
-        {
-            switch(position)
-            {
-                case 0:
-                    return getString(R.string.ladder);
-                case 1:
-                    return getString(R.string.games);
-            }
-            return null;
-        }
-    }
+		@Override
+		public CharSequence getPageTitle(int position)
+		{
+			switch(position)
+			{
+				case 0:
+					return getString(R.string.ladder);
+				case 1:
+					return getString(R.string.games);
+			}
+			return null;
+		}
+	}
 }

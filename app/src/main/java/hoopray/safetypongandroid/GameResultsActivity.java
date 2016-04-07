@@ -106,8 +106,9 @@ public class GameResultsActivity extends AppCompatActivity
 						secondPlayer = next.getValue(Player.class);
 				}
 
-				HelperFunctions.applyRatingChange(firstPlayer, secondPlayer, firstId, secondId,
-						firstPlayerScore, secondPlayerScore, firstPlayerScore > secondPlayerScore ? 1 : 0);
+				if(firstPlayer != null && secondPlayer != null)
+					HelperFunctions.applyRatingChange(firstPlayer, secondPlayer, firstId, secondId,
+							firstPlayerScore, secondPlayerScore, firstPlayerScore > secondPlayerScore ? 1 : 0);
 				Intent intent = new Intent(GameResultsActivity.this, LeagueActivity.class);
 				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(intent);

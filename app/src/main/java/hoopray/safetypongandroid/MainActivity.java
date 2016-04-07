@@ -16,7 +16,6 @@ public class MainActivity extends AppCompatActivity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_activity);
-		ButterKnife.bind(this);
 
 		if(SafetyApplication.is21Plus)
 			getWindow().setExitTransition(new Explode());
