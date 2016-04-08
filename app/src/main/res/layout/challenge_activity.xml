@@ -23,13 +23,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-                <AutoCompleteTextView
+                <EditText
                     style="@style/ChallengeEditText"
                     android:id="@+id/first_challenger"
                     android:layout_width="@dimen/player_text_width"
                     android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
                     android:hint="@string/first_player"/>
             </android.support.design.widget.TextInputLayout>
+
+            <Spinner
+                android:id="@+id/first_player_spinner"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_alignRight="@id/p1_input"/>
 
             <TextView
                 style="@style/FinalChallengerText"
@@ -82,13 +92,23 @@
                 android:layout_height="wrap_content"
                 android:alpha="0">
 
-                <AutoCompleteTextView
+                <EditText
                     style="@style/ChallengeEditText"
                     android:id="@+id/second_challenger"
                     android:layout_width="@dimen/player_text_width"
                     android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
                     android:hint="@string/second_player"/>
             </android.support.design.widget.TextInputLayout>
+
+            <Spinner
+                android:id="@+id/second_player_spinner"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_alignRight="@id/p2_input"/>
 
             <TextView
                 style="@style/FinalChallengerText"
