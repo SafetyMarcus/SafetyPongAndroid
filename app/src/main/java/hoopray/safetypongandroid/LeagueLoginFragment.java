@@ -10,7 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -19,13 +20,10 @@ import com.firebase.client.Query;
 
 import java.util.HashMap;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
-
 import static hoopray.safetypongandroid.FirebaseConstants.LEAGUES;
 
 /**
- * @author Dominic Murray 4/04/2016.
+ * @author Dominic Murray
  */
 public class LeagueLoginFragment extends Fragment
 {

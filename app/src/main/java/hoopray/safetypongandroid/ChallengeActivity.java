@@ -14,8 +14,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.Interpolator;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -51,9 +51,14 @@ public class ChallengeActivity extends AppCompatActivity
 	TextView secondChallengerFinalView;
 
 	@Bind(R.id.first_challenger)
-	AutoCompleteTextView firstEditText;
+	EditText firstEditText;
 	@Bind(R.id.second_challenger)
-	AutoCompleteTextView secondEditText;
+	EditText secondEditText;
+
+	@Bind(R.id.first_player_spinner)
+	Spinner firstSpinner;
+	@Bind(R.id.second_player_spinner)
+	Spinner secondSpinner;
 
 	AnimatorSet vsSet;
 	AnimatorSet hideSet;
@@ -72,6 +77,9 @@ public class ChallengeActivity extends AppCompatActivity
 
 	private String firstId;
 	private String secondId;
+
+	boolean firstLoaded;
+	boolean secondLoaded;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -92,8 +100,8 @@ public class ChallengeActivity extends AppCompatActivity
 			@Override
 			public void onDataChange(DataSnapshot dataSnapshot)
 			{
-				final ArrayList<String> ids = new ArrayList<>();
-				final ArrayList<String> names = new ArrayList<>();
+				ArrayList<String> ids = new ArrayList<>();
+				ArrayList<String> names = new ArrayList<>();
 
 				for(DataSnapshot next : dataSnapshot.getChildren())
 				{
@@ -101,50 +109,64 @@ public class ChallengeActivity extends AppCompatActivity
 					names.add(next.getValue(Player.class).getName());
 				}
 
-				ArrayAdapter<String> playerNames = new ArrayAdapter<>(ChallengeActivity.this, R.layout.label, names);
-				firstEditText.setAdapter(playerNames);
-				secondEditText.setAdapter(playerNames);
-
-				firstEditText.setOnItemClickListener(new AdapterView.OnItemClickListener()
+				final PlayerSpinnerAdapter adapter = new PlayerSpinnerAdapter(names, ids);
+				firstSpinner.setAdapter(adapter);
+				secondSpinner.setAdapter(adapter);
+				firstSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
 				{
 					@Override
-					public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+					public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
 					{
-						firstId = getIdFromPositionInArrayOfValue(ids, names, firstEditText.getText().toString(), position);
+						if(!firstLoaded)
+						{
+							firstLoaded = true;
+							return;
+						}
+
+						firstId = adapter.getId(position);
+						firstEditText.setText(adapter.getItem(position));
+					}
+
+					@Override
+					public void onNothingSelected(AdapterView<?> parent)
+					{
 					}
 				});
-				secondEditText.setOnItemClickListener(new AdapterView.OnItemClickListener()
+
+				secondSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
 				{
 					@Override
-					public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+					public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
 					{
-						secondId = getIdFromPositionInArrayOfValue(ids, names, secondEditText.getText().toString(), position);
+						if(!secondLoaded)
+						{
+							secondLoaded = true;
+							return;
+						}
+
+						secondId = adapter.getId(position);
+						secondEditText.setText(adapter.getItem(position));
+					}
+
+					@Override
+					public void onNothingSelected(AdapterView<?> parent)
+					{
 					}
 				});
 			}
 		});
 	}
 
-	private String getIdFromPositionInArrayOfValue(ArrayList<String> ids, ArrayList<String> names, String name, int position)
+	@OnClick(R.id.first_challenger)
+	void clickFirst()
 	{
-		int current = 0;
-		String id = null;
-		for(int i = 0; i < names.size(); i++)
-		{
-			String currentName = names.get(i);
-			if(name.equals(currentName))
-			{
-				if(current == position)
-				{
-					id = ids.get(i);
-					break;
-				}
-				else
-					current++;
-			}
-		}
+		firstSpinner.performClick();
+	}
 
-		return id;
+	@OnClick(R.id.second_challenger)
+	void clickSecond()
+	{
+		secondSpinner.performClick();
 	}
 
 	@OnClick(R.id.p1_next)
