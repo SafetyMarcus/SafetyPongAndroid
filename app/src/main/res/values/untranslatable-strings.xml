@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="facebook_app_id">154016564993393</string>
     <string name="floating_card">floating_card</string>
     <string name="background">background</string>
     <string name="first_challenger">first challenger</string>
