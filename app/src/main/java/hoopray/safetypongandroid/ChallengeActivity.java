@@ -78,9 +78,6 @@ public class ChallengeActivity extends AppCompatActivity
 	private String firstId;
 	private String secondId;
 
-	boolean firstLoaded;
-	boolean secondLoaded;
-
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
