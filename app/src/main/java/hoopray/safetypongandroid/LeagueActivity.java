@@ -9,11 +9,29 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import butterknife.Bind;
-import butterknife.ButterKnife;
+
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
 
 import java.lang.ref.WeakReference;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import io.branch.indexing.BranchUniversalObject;
+import io.branch.referral.Branch;
+import io.branch.referral.BranchError;
+import io.branch.referral.util.LinkProperties;
+import io.branch.referral.util.ShareSheetStyle;
+
+import static hoopray.safetypongandroid.DeepLinkProcessor.LEAGUE_ID;
+import static hoopray.safetypongandroid.FirebaseConstants.FIREBASE_PATH;
+import static hoopray.safetypongandroid.FirebaseConstants.LEAGUES;
+import static hoopray.safetypongandroid.FirebaseConstants.NAME;
+import static hoopray.safetypongandroid.FirebaseConstants.PLAYER;
 
 public class LeagueActivity extends AppCompatActivity implements PlusFragmentManager
 {
@@ -26,6 +44,7 @@ public class LeagueActivity extends AppCompatActivity implements PlusFragmentMan
 
 	private WeakReference<PlusFragment> plusFragmentReference = new WeakReference<>(null);
 	private ViewPager.OnPageChangeListener listener;
+    private String name = "";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -70,6 +89,77 @@ public class LeagueActivity extends AppCompatActivity implements PlusFragmentMan
 				plusFragmentReference.get().onPlusClicked();
 			}
 		});
+
+		new Firebase(FIREBASE_PATH).child(LEAGUES).child(SafetyApplication.getInstance().currentLeagueKey).addListenerForSingleValueEvent(new SingleUpdateListener()
+		{
+			@Override
+			public void onDataChange(DataSnapshot dataSnapshot)
+			{
+				for(DataSnapshot snapshot : dataSnapshot.getChildren())
+				{
+					if(NAME.equalsIgnoreCase(snapshot.getKey()))
+					{
+						name = (String) snapshot.getValue();
+						break;
+					}
+				}
+
+				if(DeepLinkProcessor.result != null && DeepLinkProcessor.result.first == DeepLinkProcessor.LEAGUE_INVITE)
+                {
+                    FirebaseHelper.addUserToLeague(SafetyApplication.getInstance().currentLeagueKey, name, PLAYER);
+                    DeepLinkProcessor.result = null;
+                }
+			}
+		});
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu)
+	{
+		menu.add(Menu.NONE, 0, Menu.NONE, R.string.invite).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		if(item.getItemId() == 0)
+		{
+            String title = getString(R.string.league_link_title, name);
+            String description = getString(R.string.league_link_description, FirebaseHelper.getAuthDisplayName());
+			BranchUniversalObject branchUniversalObject = new BranchUniversalObject()
+					.setCanonicalIdentifier("league/" + SafetyApplication.getInstance().currentLeagueKey)
+					.setTitle(title)
+					.setContentDescription(description)
+					.addContentMetadata(LEAGUE_ID, SafetyApplication.getInstance().currentLeagueKey);
+			LinkProperties properties = new LinkProperties();
+			properties.addControlParameter(LEAGUE_ID, SafetyApplication.getInstance().currentLeagueKey);
+			branchUniversalObject.showShareSheet(this, properties, new ShareSheetStyle(this, title, description), new Branch.BranchLinkShareListener()
+			{
+				@Override
+				public void onShareLinkDialogLaunched()
+				{
+				}
+
+				@Override
+				public void onShareLinkDialogDismissed()
+				{
+				}
+
+				@Override
+				public void onLinkShareResponse(String sharedLink, String sharedChannel, BranchError error)
+				{
+					Log.d("pong", "link shared: " + sharedLink + " channel: " + sharedChannel);
+				}
+
+				@Override
+				public void onChannelSelected(String channelName)
+				{
+
+				}
+			});
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	@Override

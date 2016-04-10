@@ -21,4 +21,7 @@
     <string name="league_name">League Name</string>
     <string name="winner">WINNER</string>
     <string name="loser">LOSER</string>
+    <string name="invite">Invite</string>
+    <string name="league_link_title">You\'ve been invited to join %s</string>
+    <string name="league_link_description">%s has invited you to join his Ping Pong ladder.</string>
 </resources>
