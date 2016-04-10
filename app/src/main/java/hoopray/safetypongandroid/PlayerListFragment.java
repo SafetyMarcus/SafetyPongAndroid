@@ -10,10 +10,12 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.Bind;
-import butterknife.ButterKnife;
+
 import com.firebase.client.Firebase;
 import com.firebase.ui.FirebaseRecyclerAdapter;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import hoopray.safetypongandroid.firebaseviewholders.PlayerViewHolder;
 
 /**
