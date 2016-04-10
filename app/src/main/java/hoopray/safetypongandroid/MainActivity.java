@@ -4,25 +4,24 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.transition.Explode;
+import android.util.Log;
 import android.view.View;
-import butterknife.Bind;
-import butterknife.ButterKnife;
+
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.appevents.AppEventsLogger;
-import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import io.branch.referral.Branch;
 import io.branch.referral.BranchError;
 
@@ -114,7 +113,7 @@ public class MainActivity extends AppCompatActivity
                     Log.i("BranchConfigTest", "deep link data: " + referringParams.toString());
                     if(DeepLinkProcessor.checkForLeagueInvite(referringParams))
                     {
-                        if(progressDialog == null)
+                        if(updating.getVisibility() == View.GONE)
                             startActivity(new Intent(MainActivity.this, LeagueActivity.class));
                     }
                 }
