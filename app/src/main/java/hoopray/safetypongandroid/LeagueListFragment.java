@@ -3,6 +3,7 @@ package hoopray.safetypongandroid;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,6 +26,8 @@ public class LeagueListFragment extends Fragment
     @Bind(R.id.recyclerview)
     RecyclerView recyclerView;
 
+    FloatingActionButton fab;
+
     private FirebaseRecyclerAdapter<String, SingleLineViewHolder> adapter;
 
     @Nullable
@@ -33,6 +36,16 @@ public class LeagueListFragment extends Fragment
     {
         View view = inflater.inflate(R.layout.recyclerview, container, false);
         ButterKnife.bind(this, view);
+        fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        fab.setVisibility(View.VISIBLE);
+        fab.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                new AddLeagueDialog().show(getActivity().getFragmentManager(), "AddLeague");
+            }
+        });
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

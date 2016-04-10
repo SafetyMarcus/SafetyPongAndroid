@@ -18,4 +18,5 @@
     <string name="updating_player_ratings">Updating Player Ratings</string>
     <string name="player_name">Player Name</string>
     <string name="rating">Rating</string>
+    <string name="league_name">League Name</string>
 </resources>
