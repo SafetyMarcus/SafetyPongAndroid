@@ -78,9 +78,6 @@ public class ChallengeActivity extends AppCompatActivity
 	private String firstId;
 	private String secondId;
 
-	boolean firstLoaded;
-	boolean secondLoaded;
-
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
@@ -117,12 +114,6 @@ public class ChallengeActivity extends AppCompatActivity
 					@Override
 					public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
 					{
-						if(!firstLoaded)
-						{
-							firstLoaded = true;
-							return;
-						}
-
 						firstId = adapter.getId(position);
 						firstEditText.setText(adapter.getItem(position));
 					}
@@ -138,12 +129,6 @@ public class ChallengeActivity extends AppCompatActivity
 					@Override
 					public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
 					{
-						if(!secondLoaded)
-						{
-							secondLoaded = true;
-							return;
-						}
-
 						secondId = adapter.getId(position);
 						secondEditText.setText(adapter.getItem(position));
 					}
@@ -153,6 +138,9 @@ public class ChallengeActivity extends AppCompatActivity
 					{
 					}
 				});
+
+				if(adapter.getCount() > 1)
+					secondSpinner.setSelection(1, false);
 			}
 		});
 	}
