@@ -15,12 +15,12 @@
     <string name="title_activity_league">LeagueActivity</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="games">Games</string>
-    <string name="updating_player_ratings">Updating Player Ratings</string>
     <string name="player_name">Player Name</string>
     <string name="rating">Rating</string>
     <string name="league_name">League Name</string>
     <string name="winner">WINNER</string>
     <string name="loser">LOSER</string>
+    <string name="authenticating">Authenticating</string>
     <string name="invite">Invite</string>
     <string name="league_link_title">You\'ve been invited to join %s</string>
     <string name="league_link_description">%s has invited you to join their Ping Pong ladder.</string>

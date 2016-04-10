@@ -1,14 +1,13 @@
 package hoopray.safetypongandroid;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.transition.Explode;
-import android.util.Log;
 import android.view.View;
-
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -29,74 +28,74 @@ import io.branch.referral.BranchError;
 
 public class MainActivity extends AppCompatActivity
 {
-    private CallbackManager callbackManager;
-    private ProgressDialog progressDialog;
-    private LoginButton loginButton;
+	private CallbackManager callbackManager;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_activity);
+	@Bind(R.id.updating)
+	View updating;
+	@Bind(R.id.login_button)
+	LoginButton loginButton;
 
-        if(SafetyApplication.is21Plus)
-            getWindow().setExitTransition(new Explode());
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+	@Override
+	protected void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.main_activity);
+		ButterKnife.bind(this);
 
-        loginButton = (LoginButton) findViewById(R.id.login_button);
-        loginButton.setReadPermissions("public_profile");
-        // Other app specific specialization
-        callbackManager = CallbackManager.Factory.create();
+		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+		setSupportActionBar(toolbar);
 
-        AccessToken token = AccessToken.getCurrentAccessToken();
-        if(token != null)
-        {
-            loginButton.setVisibility(View.GONE);
-            startAuthProcess(token);
-        }
+		loginButton.setReadPermissions("public_profile");
+		callbackManager = CallbackManager.Factory.create();
 
-        // Callback registration
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>()
-        {
-            @Override
-            public void onSuccess(LoginResult loginResult)
-            {
-                startAuthProcess(loginResult.getAccessToken());
-            }
+		AccessToken token = AccessToken.getCurrentAccessToken();
+		if(token != null)
+		{
+			loginButton.setVisibility(View.GONE);
+			startAuthProcess(token);
+		}
 
-            @Override
-            public void onCancel()
-            {
-            }
+		// Callback registration
+		loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>()
+		{
+			@Override
+			public void onSuccess(LoginResult loginResult)
+			{
+				startAuthProcess(loginResult.getAccessToken());
+			}
 
-            @Override
-            public void onError(FacebookException exception)
-            {
-            }
-        });
-    }
+			@Override
+			public void onCancel()
+			{
+			}
 
-    @Override
-    protected void onResume()
-    {
-        super.onResume();
-        AppEventsLogger.activateApp(this);
-    }
+			@Override
+			public void onError(FacebookException exception)
+			{
+			}
+		});
+	}
 
-    @Override
-    protected void onPause()
-    {
-        super.onPause();
-        AppEventsLogger.deactivateApp(this);
-    }
+	@Override
+	protected void onResume()
+	{
+		super.onResume();
+		AppEventsLogger.activateApp(this);
+	}
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
-    }
+	@Override
+	protected void onPause()
+	{
+		super.onPause();
+		AppEventsLogger.deactivateApp(this);
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data)
+	{
+		super.onActivityResult(requestCode, resultCode, data);
+		callbackManager.onActivityResult(requestCode, resultCode, data);
+	}
 
     @Override
     public void onStart()
@@ -131,53 +130,48 @@ public class MainActivity extends AppCompatActivity
 
     private void startAuthProcess(AccessToken token)
     {
-        progressDialog = new ProgressDialog(this);
-        progressDialog.show();
+updating.setVisibility(View.VISIBLE);
 
-        Firebase ref = new Firebase(FirebaseConstants.FIREBASE_PATH);
-        if(token == null)
-        {
-            ref.unauth();
-            return;
-        }
+		Firebase ref = new Firebase(FirebaseConstants.FIREBASE_PATH);
+		if(token == null)
+		{
+			ref.unauth();
+			return;
+		}
 
-        ref.authWithOAuthToken("facebook", token.getToken(), new FirebaseAuthHandler());
-    }
+		ref.authWithOAuthToken("facebook", token.getToken(), new FirebaseAuthHandler());
+	}
 
-    private void handleAuthResultsReceived()
-    {
-        if(progressDialog != null)
-        {
-            progressDialog.dismiss();
-            progressDialog = null;
-        }
-    }
+	private void handleAuthResultsReceived()
+	{
+		updating.setVisibility(View.GONE);
+	}
 
-    private class FirebaseAuthHandler implements Firebase.AuthResultHandler
-    {
-        @Override
-        public void onAuthenticated(AuthData authData)
-        {
-            FirebaseHelper.updateUsersDetails(authData);
+	private class FirebaseAuthHandler implements Firebase.AuthResultHandler
+	{
+		@Override
+		public void onAuthenticated(AuthData authData)
+		{
+			FirebaseHelper.updateUsersDetails(authData);
 
-            runOnUiThread(new Runnable()
-            {
-                @Override
-                public void run()
-                {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.container, new LeagueListFragment()).commit();
-                    loginButton.setVisibility(View.GONE);
-                    handleAuthResultsReceived();
+			runOnUiThread(new Runnable()
+			{
+				@Override
+				public void run()
+				{
+					getSupportFragmentManager().beginTransaction().replace(R.id.container, new LeagueListFragment()).commit();
+					loginButton.setVisibility(View.GONE);
+					handleAuthResultsReceived();
                     if(DeepLinkProcessor.result != null && DeepLinkProcessor.result.first == DeepLinkProcessor.LEAGUE_INVITE)
                         startActivity(new Intent(MainActivity.this, LeagueActivity.class));
-                }
-            });
-        }
+				}
+			});
+		}
 
-        @Override
-        public void onAuthenticationError(FirebaseError firebaseError)
-        {
-            handleAuthResultsReceived();
-        }
-    }
+		@Override
+		public void onAuthenticationError(FirebaseError firebaseError)
+		{
+			handleAuthResultsReceived();
+		}
+	}
 }

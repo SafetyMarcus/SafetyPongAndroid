@@ -9,9 +9,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 
 import com.firebase.client.DataSnapshot;
@@ -53,9 +50,10 @@ public class LeagueActivity extends AppCompatActivity implements PlusFragmentMan
         setContentView(R.layout.activity_league);
         ButterKnife.bind(this);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+		setSupportActionBar(toolbar);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         mViewPager.setAdapter(mSectionsPagerAdapter);
         tabLayout.setupWithViewPager(mViewPager);
@@ -162,11 +160,11 @@ public class LeagueActivity extends AppCompatActivity implements PlusFragmentMan
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void instantiatePlus()
-    {
-        listener.onPageSelected(0);
-    }
+	@Override
+	public void instantiatePlus()
+	{
+		listener.onPageSelected(0);
+	}
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter
     {
