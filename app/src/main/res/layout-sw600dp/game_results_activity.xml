@@ -9,33 +9,8 @@
                 android:transitionName="@string/background"
                 android:background="@color/colorPrimary">
 
-    <LinearLayout
-        android:id="@+id/updating"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#000000"
-        android:alpha="0.5"
-        android:clickable="true"
-        android:gravity="center"
-        android:visibility="gone"
-        android:elevation="5dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/updating_player_ratings"
-            android:textColor="@android:color/white"
-            android:textSize="24sp"/>
-
-        <ProgressBar
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_margin="8dp"
-            android:indeterminate="true"/>
-    </LinearLayout>
-
     <RelativeLayout
+        android:id="@+id/card_layout"
         android:layout_width="@dimen/card_width"
         android:layout_height="@dimen/card_height"
         android:background="@drawable/rounded_white_card"

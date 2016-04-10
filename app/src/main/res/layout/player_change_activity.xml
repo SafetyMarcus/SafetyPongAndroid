@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/background"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:focusableInTouchMode="true"
+                android:transitionName="@string/background"
+                android:background="@android:color/white">
+
+    <TextView
+        style="@style/FinalChallengerText"
+        android:id="@+id/first_challenger"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        tools:text="First Player"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="24dp"
+        android:transitionName="@string/first_challenger"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_below="@id/first_challenger">
+
+        <TextView
+            android:id="@+id/player_one_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="40sp"
+            tools:text="Winner"
+            android:alpha="0"
+            android:layout_marginRight="4dp"
+            android:layout_marginTop="8dp"
+            tools:textColor="@android:color/holo_green_dark"/>
+
+        <TextView
+            android:id="@+id/player_one_change"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="32sp"
+            android:alpha="0"
+            tools:text="+ 24"
+            android:layout_marginLeft="4dp"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/gold"/>
+    </LinearLayout>
+
+    <TextView
+        style="@style/FinalChallengerText"
+        android:id="@+id/second_challenger"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Second Player"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="24dp"
+        android:layout_centerVertical="true"
+        android:transitionName="@string/second_challenger"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/second_challenger"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/player_two_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="40sp"
+            tools:text="Loser"
+            android:alpha="0"
+            android:layout_marginRight="4dp"
+            android:layout_marginTop="8dp"
+            tools:textColor="@android:color/holo_red_dark"/>
+
+        <TextView
+            android:id="@+id/player_two_change"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="32sp"
+            tools:text="- 24"
+            android:alpha="0"
+            android:layout_marginLeft="4dp"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/gold"/>
+    </LinearLayout>
+</RelativeLayout>

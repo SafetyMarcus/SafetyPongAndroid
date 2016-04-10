@@ -7,4 +7,5 @@
     <color name="lightText">#666666</color>
     <color name="darkText">#333333</color>
     <color name="divider">#cccccc</color>
+    <color name="gold"> #ffb92b</color>
 </resources>

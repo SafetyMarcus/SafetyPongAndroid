@@ -4,6 +4,9 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.transition.ChangeTransform;
 import android.view.View;
@@ -14,6 +17,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.firebase.client.DataSnapshot;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -36,8 +41,6 @@ public class GameResultsActivity extends AppCompatActivity
 	EditText secondScore;
 	@Bind(R.id.save)
 	View save;
-	@Bind(R.id.updating)
-	View updating;
 
 	private String firstId;
 	private String secondId;
@@ -79,8 +82,6 @@ public class GameResultsActivity extends AppCompatActivity
 	@OnClick(R.id.save)
 	void saveClicked()
 	{
-		updating.setVisibility(View.VISIBLE);
-
 		FirebaseHelper.getPlayerReferences().addListenerForSingleValueEvent(new SingleUpdateListener()
 		{
 			@Override
@@ -107,11 +108,41 @@ public class GameResultsActivity extends AppCompatActivity
 				}
 
 				if(firstPlayer != null && secondPlayer != null)
-					HelperFunctions.applyRatingChange(firstPlayer, secondPlayer, firstId, secondId,
+				{
+					int change = HelperFunctions.applyRatingChange(firstPlayer, secondPlayer, firstId, secondId,
 							firstPlayerScore, secondPlayerScore, firstPlayerScore > secondPlayerScore ? 1 : 0);
-				Intent intent = new Intent(GameResultsActivity.this, LeagueActivity.class);
-				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				startActivity(intent);
+
+					Intent intent = new Intent(GameResultsActivity.this, PlayerChangeActivity.class);
+					List<Pair<View, String>> sharedElements = new ArrayList<>();
+					if(getResources().getBoolean(R.bool.isLarge))
+					{
+						View cardLayout = findViewById(R.id.card_layout);
+						String transitionName = getString(R.string.floating_card);
+						sharedElements.add(Pair.create(cardLayout, transitionName));
+
+						View background = findViewById(R.id.background);
+						String backgroundName = getString(R.string.background);
+						sharedElements.add(Pair.create(background, backgroundName));
+					}
+
+					sharedElements.add(Pair.create(findViewById(R.id.first_challenger), getString(R.string.first_challenger)));
+					sharedElements.add(Pair.create(findViewById(R.id.second_challenger), getString(R.string.second_challenger)));
+
+					intent.putExtra(PlayerChangeActivity.FIRST_NAME, firstChallenger.getText());
+					intent.putExtra(PlayerChangeActivity.SECOND_NAME, secondChallenger.getText());
+					intent.putExtra(PlayerChangeActivity.CHANGE, Integer.signum(change) == -1 ? change * -1 : change);
+					intent.putExtra(PlayerChangeActivity.P1_WINS, firstPlayerScore > secondPlayerScore);
+					Pair<View, String>[] views = sharedElements.toArray(new Pair[sharedElements.size()]);
+					ActivityCompat.startActivity(GameResultsActivity.this, intent,
+							ActivityOptionsCompat.makeSceneTransitionAnimation(GameResultsActivity.this,
+									views).toBundle());
+				}
+				else
+				{
+					Intent intent = new Intent(GameResultsActivity.this, LeagueActivity.class);
+					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					startActivity(intent);
+				}
 			}
 		});
 	}
