@@ -10,13 +10,17 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.firebase.client.Firebase;
-import com.firebase.ui.FirebaseRecyclerAdapter;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import hoopray.safetypongandroid.firebaseviewholders.PlayerViewHolder;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * @author Dominic Murray
@@ -25,8 +29,6 @@ public class PlayerListFragment extends Fragment implements PlusFragment
 {
 	@Bind(R.id.recyclerview)
 	RecyclerView recyclerView;
-
-	private FirebaseRecyclerAdapter<Player, PlayerViewHolder> adapter;
 
 	@Nullable
 	@Override
@@ -39,18 +41,63 @@ public class PlayerListFragment extends Fragment implements PlusFragment
 		recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 		Firebase ref = FirebaseHelper.getPlayerReferences();
-		adapter = new FirebaseRecyclerAdapter<Player, PlayerViewHolder>(Player.class, R.layout.player_list_item, PlayerViewHolder.class, ref)
+		final ArrayList<Player> players = new ArrayList<>();
+
+		final RecyclerView.Adapter<PlayerViewHolder> adapter = new RecyclerView.Adapter<PlayerViewHolder>()
 		{
 			@Override
-			protected void populateViewHolder(PlayerViewHolder playerViewHolder, Player player, int i)
+			public PlayerViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
+			{
+				return new PlayerViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.player_list_item, parent, false));
+			}
+
+			@Override
+			public void onBindViewHolder(PlayerViewHolder playerViewHolder, int i)
 			{
 				playerViewHolder.position.setText(String.valueOf(i + 1) + ".");
 
-				String name = player.getName();
+				String name = players.get(i).getName();
 				playerViewHolder.name.setText(TextUtils.isEmpty(name) ? getString(R.string.no_name) : name);
-				playerViewHolder.rating.setText(String.valueOf(player.getRating()));
+				playerViewHolder.rating.setText(String.valueOf(players.get(i).getRating()));
+			}
+
+			@Override
+			public int getItemCount()
+			{
+				return players.size();
 			}
 		};
+
+		ref.addValueEventListener(new ValueEventListener()
+		{
+			@Override
+			public void onDataChange(DataSnapshot dataSnapshot)
+			{
+				players.clear();
+				for(DataSnapshot next : dataSnapshot.getChildren())
+				{
+					players.add(next.getValue(Player.class));
+				}
+				Collections.sort(players, new Comparator<Player>()
+				{
+					@Override
+					public int compare(Player lhs, Player rhs)
+					{
+						int lhsRating = lhs.getRating();
+						int rhsRating = rhs.getRating();
+
+						return rhsRating < lhsRating ? -1 : (rhsRating == lhsRating ? 0 : 1);
+					}
+				});
+				adapter.notifyDataSetChanged();
+			}
+
+			@Override
+			public void onCancelled(FirebaseError firebaseError)
+			{
+			}
+		});
+
 		recyclerView.setAdapter(adapter);
 
 		((PlusFragmentManager) getActivity()).instantiatePlus();
@@ -61,7 +108,6 @@ public class PlayerListFragment extends Fragment implements PlusFragment
 	public void onDestroy()
 	{
 		super.onDestroy();
-		adapter.cleanup();
 	}
 
 	@Override
