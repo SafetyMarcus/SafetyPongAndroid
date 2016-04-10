@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="hoopray.safetypongandroid"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest
+    package="hoopray.safetypongandroid"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
+        android:name=".SafetyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:name=".SafetyApplication">
+        android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id"/>
+
         <activity
             android:name=".MainActivity"
             android:label="@string/ladder"
@@ -21,14 +27,25 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ChallengeActivity" android:theme="@style/NoBar"/>
-        <activity android:name=".GameResultsActivity" android:theme="@style/NoBar"/>
+        <activity
+            android:name=".ChallengeActivity"
+            android:theme="@style/NoBar"/>
+        <activity
+            android:name=".GameResultsActivity"
+            android:theme="@style/NoBar"/>
 
         <activity
             android:name=".LeagueActivity"
             android:label="@string/title_activity_league"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges=
+                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
     </application>
 
 </manifest>
