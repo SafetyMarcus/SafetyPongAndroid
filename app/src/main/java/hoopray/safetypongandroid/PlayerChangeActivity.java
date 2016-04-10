@@ -1,5 +1,7 @@
 package hoopray.safetypongandroid;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -69,6 +71,37 @@ public class PlayerChangeActivity extends AppCompatActivity
 
 		if(SafetyApplication.is21Plus)
 			startPostponedEnterTransition();
+
+		AnimatorSet set = new AnimatorSet();
+		ObjectAnimator firstStateAlpha = ObjectAnimator.ofFloat(playerOneState, "alpha", 1);
+		firstStateAlpha.setDuration(400);
+		ObjectAnimator firstStateTransition = ObjectAnimator.ofFloat(playerOneState, "translationX", -HelperFunctions.intDpToDisplayMetric(48), 0);
+		firstStateTransition.setDuration(500);
+
+		ObjectAnimator firstChangeAlpha = ObjectAnimator.ofFloat(playerOneChange, "alpha", 1);
+		firstChangeAlpha.setDuration(400);
+		firstChangeAlpha.setStartDelay(500);
+		ObjectAnimator firstChangeTransition = ObjectAnimator.ofFloat(playerOneChange, "translationX", HelperFunctions.intDpToDisplayMetric(48), 0);
+		firstChangeTransition.setDuration(500);
+		firstChangeTransition.setStartDelay(500);
+
+		ObjectAnimator secondStateAlpha = ObjectAnimator.ofFloat(playerTwoState, "alpha", 1);
+		secondStateAlpha.setDuration(400);
+		secondStateAlpha.setStartDelay(1000);
+		ObjectAnimator secondStateTransition = ObjectAnimator.ofFloat(playerTwoState, "translationX", -HelperFunctions.intDpToDisplayMetric(48), 0);
+		secondStateTransition.setDuration(500);
+		secondStateTransition.setStartDelay(1000);
+
+		ObjectAnimator secondChangeAlpha = ObjectAnimator.ofFloat(playerTwoChange, "alpha", 1);
+		secondChangeAlpha.setDuration(400);
+		secondChangeAlpha.setStartDelay(1500);
+		ObjectAnimator secondChangeTransition = ObjectAnimator.ofFloat(playerTwoChange, "translationX", HelperFunctions.intDpToDisplayMetric(48), 0);
+		secondChangeTransition.setDuration(500);
+		secondChangeTransition.setStartDelay(1500);
+
+		set.playTogether(firstStateAlpha, firstStateTransition, firstChangeAlpha, firstChangeTransition,
+				secondStateAlpha, secondStateTransition, secondChangeAlpha, secondChangeTransition);
+		set.start();
 	}
 
 	@Override
@@ -82,7 +115,7 @@ public class PlayerChangeActivity extends AppCompatActivity
 			{
 				end();
 			}
-		}, 2000);
+		}, 3000);
 	}
 
 	@Override
