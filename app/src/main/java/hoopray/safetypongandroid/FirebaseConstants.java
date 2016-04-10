@@ -11,10 +11,13 @@ public class FirebaseConstants
     public static final String PASSWORD = "password";
 
     public static final String USERS = "users";
+
+    //Roles
     public static final String ROLES = "roles";
     public static final String OWNER = "owner";
     public static final String ADMIN = "admin";
     public static final String PLAYER = "player";
+
     public static final String IMAGE = "image";
 
     public static final String PLAYERS = "players";

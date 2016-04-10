@@ -17,14 +17,35 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"/>
 
+        <meta-data android:name="io.branch.sdk.TestMode" android:value="true" />
+
+        <meta-data
+            android:name="io.branch.sdk.BranchKey"
+            android:value="key_live_dca8DV8WB1qpuLpPHx61lhlkqFjAb0Cb"/>
+
+        <meta-data
+            android:name="io.branch.sdk.BranchKey.test"
+            android:value="key_test_pbe8DU6YuWwcyNgTTUmgPnamBukFdZwr"/>
+
         <activity
             android:name=".MainActivity"
             android:label="@string/ladder"
+            android:launchMode="singleTask"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+
+            <intent-filter>
+                <data
+                    android:host="open"
+                    android:scheme="hoopraypong"/>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
             </intent-filter>
         </activity>
         <activity

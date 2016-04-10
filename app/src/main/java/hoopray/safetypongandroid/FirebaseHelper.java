@@ -47,6 +47,15 @@ public class FirebaseHelper
 		firebase.child(USERS).child(authId).child(LEAGUES).child(key).setValue(leagueName);
 	}
 
+	public static void addUserToLeague(String leagueKey, String leagueName, String role)
+	{
+		Firebase firebase = new Firebase(FIREBASE_PATH);
+		String authId = firebase.getAuth().getUid();
+		new Firebase(FirebaseConstants.FIREBASE_PATH).child(LEAGUES).child(leagueKey).child(ROLES).child(authId).setValue(role);
+
+		firebase.child(USERS).child(authId).child(LEAGUES).child(leagueKey).setValue(leagueName);
+	}
+
 	public static void updateUsersDetails(AuthData authData)
 	{
 		Firebase firebase = new Firebase(FIREBASE_PATH).child(USERS).child(authData.getUid());
@@ -68,5 +77,15 @@ public class FirebaseHelper
 	{
 		Firebase ref = new Firebase(FIREBASE_PATH);
 		return ref.child(USERS).child(ref.getAuth().getUid()).child(LEAGUES);
+	}
+
+	public static Firebase getAppRef()
+	{
+		return new Firebase(FIREBASE_PATH);
+	}
+
+	public static String getAuthDisplayName()
+	{
+		return (String) getAppRef().getAuth().getProviderData().get("displayName");
 	}
 }

@@ -6,6 +6,8 @@ import android.os.Build;
 import com.facebook.FacebookSdk;
 import com.firebase.client.Firebase;
 
+import io.branch.referral.Branch;
+
 /**
  * @author Marcus Hooper
  */
@@ -25,6 +27,7 @@ public class SafetyApplication extends Application
 		app = this;
 		Firebase.setAndroidContext(this);
 		FacebookSdk.sdkInitialize(this);
+		Branch.getAutoInstance(this);
 //        Firebase safetyPong = firebase.child("leagues").child(UUID.randomUUID().toString());
 //        League league = new League("SafetyPong", "SafetyWow");
 //        safetyPong.setValue(league);
