@@ -21,7 +21,7 @@ public class HelperFunctions
 	 * @param playerTwoScore The score in the current game of the second player
 	 * @param result         Binary value of player one win status. Player one wins == 1 Player 2 wins == 0
 	 */
-	public static void applyRatingChange(Player playerOne, Player playerTwo, String firstId, String secondId, int playerOneScore, int playerTwoScore, int result)
+	public static int applyRatingChange(Player playerOne, Player playerTwo, String firstId, String secondId, int playerOneScore, int playerTwoScore, int result)
 	{
 		int playerOneRating = playerOne.getRating();
 		int playerTwoRating = playerTwo.getRating();
@@ -53,6 +53,8 @@ public class HelperFunctions
 
 		FirebaseHelper.savePlayer(firstId, playerOne);
 		FirebaseHelper.savePlayer(secondId, playerTwo);
+
+		return change;
 	}
 
 	public static int intDpToDisplayMetric(int expectedDp)

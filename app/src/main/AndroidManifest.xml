@@ -33,6 +33,9 @@
         <activity
             android:name=".GameResultsActivity"
             android:theme="@style/NoBar"/>
+        <activity
+            android:name=".PlayerChangeActivity"
+            android:theme="@style/NoBar"/>
 
         <activity
             android:name=".LeagueActivity"

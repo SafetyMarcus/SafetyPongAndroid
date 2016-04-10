@@ -10,7 +10,6 @@
                 android:background="@color/colorPrimary">
 
     <RelativeLayout
-        android:id="@+id/card_layout"
         android:layout_width="@dimen/card_width"
         android:layout_height="@dimen/card_height"
         android:background="@drawable/rounded_white_card"
@@ -29,16 +28,33 @@
             android:layout_marginTop="24dp"
             android:transitionName="@string/first_challenger"/>
 
-        <EditText
-            style="@style/ChallengeEditText"
-            android:id="@+id/first_score"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/first_challenger"
-            android:layout_margin="16dp"
-            android:inputType="number"
-            android:alpha="0"
-            android:hint="@string/first_player_score"/>
+            android:gravity="center"
+            android:layout_below="@id/first_challenger">
+
+            <TextView
+                android:id="@+id/player_one_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="40sp"
+                tools:text="Winner"
+                android:layout_marginRight="4dp"
+                android:layout_marginTop="8dp"
+                tools:textColor="@android:color/holo_green_dark"/>
+
+            <TextView
+                android:id="@+id/player_one_change"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="32sp"
+                tools:text="+ 24"
+                android:layout_marginLeft="4dp"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/gold"/>
+        </LinearLayout>
 
         <TextView
             style="@style/FinalChallengerText"
@@ -51,23 +67,32 @@
             android:layout_centerVertical="true"
             android:transitionName="@string/second_challenger"/>
 
-        <EditText
-            style="@style/ChallengeEditText"
-            android:id="@+id/second_score"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/second_challenger"
-            android:layout_margin="16dp"
-            android:alpha="0"
-            android:inputType="number"
-            android:hint="@string/second_player_score"/>
+            android:gravity="center">
 
-        <Button
-            style="@style/Button"
-            android:id="@+id/save"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:alpha="0"/>
+            <TextView
+                android:id="@+id/player_two_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="40sp"
+                tools:text="Loser"
+                android:layout_marginRight="4dp"
+                android:layout_marginTop="8dp"
+                tools:textColor="@android:color/holo_red_dark"/>
+
+            <TextView
+                android:id="@+id/player_two_change"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="32sp"
+                tools:text="- 24"
+                android:layout_marginLeft="4dp"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/gold"/>
+        </LinearLayout>
     </RelativeLayout>
-
 </RelativeLayout>

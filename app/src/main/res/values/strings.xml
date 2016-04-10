@@ -19,4 +19,6 @@
     <string name="player_name">Player Name</string>
     <string name="rating">Rating</string>
     <string name="league_name">League Name</string>
+    <string name="winner">WINNER</string>
+    <string name="loser">LOSER</string>
 </resources>
