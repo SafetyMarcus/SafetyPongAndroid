@@ -18,7 +18,6 @@ public class FirebaseConstants
     public static final String ADMIN = "admin";
     public static final String PLAYER = "player";
 
-
     public static final String IMAGE = "image";
 
     public static final String PLAYERS = "players";
